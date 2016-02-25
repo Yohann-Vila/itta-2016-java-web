@@ -1,6 +1,11 @@
 package business;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  *
@@ -8,34 +13,67 @@ import java.util.Collection;
  */
 public class CatThreadDAOTest implements ICatThreadDAO {
     
+    static Set<CatThread> catThreads = new LinkedHashSet<>();
+    
     @Override
     public Collection<CatThread> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Collections.unmodifiableSet(catThreads);
     }
 
     @Override
     public Collection<CatThread> findByLogin(String login) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<CatThread> results = new LinkedHashSet<>(); //To change body of generated methods, choose Tools | Templates.
+        for (CatThread thread : catThreads) {
+            if (thread.getLogin().equals(login)) {
+                results.add(thread);
+            }
+        }
+        return Collections.unmodifiableSet(results);
     }
 
     @Override
     public Collection<CatThread> findByTitle(String partialTitle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        Set<CatThread> results = new LinkedHashSet<>(); //To change body of generated methods, choose Tools | Templates.
+        for (CatThread thread : catThreads) {
+            if (thread.getLogin().contains(partialTitle)) {
+                results.add(thread);
+            }
+        }
+        return Collections.unmodifiableSet(results);    }
 
     @Override
     public boolean modify(CatThread catThread) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (catThread == null) {
+            return false;
+        }
+        
+        int id = catThread.getCatThreadId();
+        CatThread oldCatThread = findByID(id);
+        
+        if (oldCatThread == null) {
+            return false;
+        }
+        
+        catThreads.remove(oldCatThread);
+        return catThreads.add(catThread);
     }
 
     @Override
     public boolean create(CatThread catThread) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (catThread == null) {
+            return false;
+        }
+        return(catThreads.add(catThread));
     }
 
     @Override
     public CatThread findByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (CatThread catThread : catThreads) {
+            if (catThread.getCatThreadId() == id) {
+                return catThread;
+            }
+        }
+        return null;
     }
     
 }
