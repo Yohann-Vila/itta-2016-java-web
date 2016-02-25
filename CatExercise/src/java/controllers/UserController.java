@@ -13,7 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "UserController", urlPatterns = {"/usercontroller"})
 public class UserController extends HttpServlet {
-    private IUserDAO userDAO=DAOFactory.getInstanceOfUser();
+    
+    private IUserDAO userDAO;
+   
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+        userDAO = DAOFactory.getInstanceOfUser();
+    }  
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
