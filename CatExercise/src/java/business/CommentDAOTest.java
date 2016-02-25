@@ -1,5 +1,7 @@
 package business;
 
+import java.util.Collection;
+
 /**
  *
  * @author Yohann
@@ -7,7 +9,7 @@ package business;
 public class CommentDAOTest implements ICommentDAO {
 
     @Override
-    public Comment getPostFromThread(int IdThread, boolean actif) {
+    public Collection<Comment> getPostsFromThread(int IdThread, boolean actif) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -20,5 +22,5 @@ public class CommentDAOTest implements ICommentDAO {
     public boolean modify(Comment c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

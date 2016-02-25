@@ -1,8 +1,10 @@
 
 package business;
 
+import java.util.Collection;
+
 public interface ICommentDAO {
-    Comment getPostFromThread(int IdThread,boolean actif);
+    Collection<Comment> getPostsFromThread(int IdThread,boolean actif);
     boolean create(Comment c);
     boolean modify(Comment c);
 }
