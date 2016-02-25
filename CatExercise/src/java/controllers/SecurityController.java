@@ -25,7 +25,7 @@ public class SecurityController extends HttpServlet {
         resp.getWriter().println("OK");
         //createThread(title, uriPhoto, user)
     } 
-       
+    
     private User getLogin(String login){
         User user=null;
         try
@@ -38,6 +38,7 @@ public class SecurityController extends HttpServlet {
          }
         
         return user;        
-
     }
+    
+    
 }
