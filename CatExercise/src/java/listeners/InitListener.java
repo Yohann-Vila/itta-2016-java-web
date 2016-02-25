@@ -13,14 +13,9 @@ public class InitListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        // créer une db user pour tester
-        sce.getServletContext().setAttribute("userdbtest", createUserDBTest());
-        
-//        // créer une db de threads pour tester
-        sce.getServletContext().setAttribute("catthreaddbtest", createCatThreadDBTest());
-//        
-//        // créer une db de commentaires pour tester
-//        sce.getServletContext().setAttribute("commentdbtest", createCommentDBTest());
+        createUserDBTest();
+        createCatThreadDBTest();
+        createCommentDBTest();
     }
 
     private IUserDAO createUserDBTest() {
@@ -43,6 +38,11 @@ public class InitListener implements ServletContextListener {
         catthreaddbtest.create(new CatThread("toto", "Le premier fil de Toto", "http://www.cats.org.uk/uploads/images/pages/photo_latest14.jpg"));
         catthreaddbtest.create(new CatThread("toto", "Deuxième fil de Toto", "http://www.cgdev.org/sites/default/files/cat8.jpg"));
         catthreaddbtest.create(new CatThread("tata", "Les chats c'est nul trololol", "http://g-ecx.images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg"));
+        for(int i=0; i<53; i++) {
+            catthreaddbtest.create(new CatThread("toto", "Toto est un spammer", "http://taraflyart.com/wp-content/uploads/2011/09/MrBennet-spam-598x600.jpg"));
+            
+        }
+        
         
         return catthreaddbtest;
     }
