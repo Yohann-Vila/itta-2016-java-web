@@ -8,8 +8,9 @@ import java.util.Date;
  * @author Yohann
  */
 public class CatThread {
+
     static int count = 0;
-    
+
     private final int catThreadId = getUniqueId();
     private final String login;
     private final String titre;
@@ -17,7 +18,7 @@ public class CatThread {
     private boolean deleted = false;
     private final Date creationDate = new Date();
     Collection<Comment> comments;
-    
+
     public int getCatThreadId() {
         return catThreadId;
     }
@@ -45,9 +46,7 @@ public class CatThread {
     public Collection<Comment> getComments() {
         return comments;
     }
-    
 
-    
     public CatThread(String login, String titre, String uriPhoto) {
         this.login = login;
         this.titre = titre;
@@ -61,4 +60,18 @@ public class CatThread {
     private int getUniqueId() {
         return ++count;
     }
+
+    @Override
+    public int hashCode() {
+        return catThreadId;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof CatThread) {
+            return ((CatThread)obj).getCatThreadId() == this.catThreadId;
+        }
+        return false;
+    }
+
 }
