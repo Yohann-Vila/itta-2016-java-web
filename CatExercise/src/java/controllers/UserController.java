@@ -3,6 +3,7 @@ package controllers;
 import business.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,15 +25,22 @@ public class UserController extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("OK");
-        //createThread(title, uriPhoto, user)
+        PrintWriter out = resp.getWriter();
+        out.println("Début Usercontroller");
+        Collection<User> xx = getAll(0);
+        for (User utilisateur : xx) {
+            out.println(utilisateur.getLogin());
+        }
+
+        out.println("Fin : Début Usercontroller");
     }  
     
     private Collection<User> getAll(int seclevel){
         Collection<User> cuser=null;
         try
         {
-            cuser = userDAO.getAll();   
+            cuser = userDAO.getAll();  
+            out.println("prise utilisateur");
         }
          catch(Exception e)
          {
