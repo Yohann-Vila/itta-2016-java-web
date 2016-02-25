@@ -1,9 +1,9 @@
 package business;
+import java.util.Collection;
 
-/**
- *
- * @author Administrator
- */
-interface IUserDAO {
-    public User findUser();
+public interface IUserDAO {
+    User find();
+    boolean creat();
+    boolean modify();   
+    Collection<User> getAll(); 
 }
