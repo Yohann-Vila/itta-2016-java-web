@@ -22,7 +22,7 @@ public class CatThreadDAOTest implements ICatThreadDAO {
 
     @Override
     public Collection<CatThread> findByLogin(String login) {
-        Set<CatThread> results = new LinkedHashSet<>(); //To change body of generated methods, choose Tools | Templates.
+        Set<CatThread> results = new LinkedHashSet<>();
         for (CatThread thread : catThreads) {
             if (thread.getLogin().equals(login)) {
                 results.add(thread);
@@ -33,7 +33,7 @@ public class CatThreadDAOTest implements ICatThreadDAO {
 
     @Override
     public Collection<CatThread> findByTitle(String partialTitle) {
-        Set<CatThread> results = new LinkedHashSet<>(); //To change body of generated methods, choose Tools | Templates.
+        Set<CatThread> results = new LinkedHashSet<>();
         for (CatThread thread : catThreads) {
             if (thread.getLogin().contains(partialTitle)) {
                 results.add(thread);
