@@ -30,6 +30,14 @@ public class InitListener implements ServletContextListener {
         return userdbtest;
     }
     
+    private ICatThreadDAO createCatThreadDBTest() {
+        return new CatThreadDAOTest();
+    }
+    
+    private ICommentDAO createCommentDBTest() {
+        return new CommentDAOTest();
+    }    
+    
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         
