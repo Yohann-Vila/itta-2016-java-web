@@ -28,7 +28,11 @@ public class InitListener implements ServletContextListener {
         
         userdbtest.creat(new User("toto", ""));
         userdbtest.creat(new User("titi", "password")); 
-        userdbtest.creat(new User("tata", "password")); 
+        userdbtest.creat(new User("tata", "password"));
+        
+        User admin = new User("admin", "admin");
+        admin.setSeclevel(100);
+        userdbtest.creat(admin);
         
         return userdbtest;
     }

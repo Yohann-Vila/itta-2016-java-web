@@ -22,21 +22,29 @@ public class UserController extends HttpServlet {
     }  
     
     private Collection<User> getAll(int seclevel){
-    
+        Collection<User> cuser=null;
         try
         {
-            Collection<User> udao = userDAO.getAll();
-            
+            cuser = userDAO.getAll();   
+        }
+         catch(Exception e)
+         {
+             System.out.println(e.getMessage());
+         }
+        
+        return cuser;
+    }
+    User banUser(String login,int seclevel){
+        User banuser = null;
+        try
+        {
+            banuser = userDAO.find(login);
         }
         catch(Exception e)
         {
-            
+             System.out.println(e.getMessage());
         }
-        return userDAO.getAll();
-    }
-    User banUser(String login,int seclevel){
-        
-        return userDAO.find(login);
+        return banuser;
     }
 
     
