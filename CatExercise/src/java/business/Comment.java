@@ -7,7 +7,7 @@ public class Comment {
     private final int threadId;
     private String login;
     private final Date creationDate;
-    private boolean isDeleted;
+    private boolean deleted;
     private String content;
     
     public Comment(int commentId, int threadId, String login, String content) {
@@ -38,12 +38,12 @@ public class Comment {
         return creationDate;
     }
 
-    public boolean isIsDeleted() {
-        return isDeleted;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setDeleted(boolean isDeleted) {
+        this.deleted = isDeleted;
     }
 
     public String getContent() {
