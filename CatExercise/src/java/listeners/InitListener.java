@@ -49,6 +49,9 @@ public class InitListener implements ServletContextListener {
     private ICommentDAO createCommentDBTest() {
         ICommentDAO commentDBTest = new CommentDAOTest();
         
+        commentDBTest.create(new Comment(1, "titi", "First !"));
+        commentDBTest.create(new Comment(1, "anonymous", "$$$$$$ --- BUY CHEAP VIAGRA GO TO http://www.ittacademy.ch BEST QUALITY ££$$$$ -----"));
+        
         return new CommentDAOTest();
     }    
     
