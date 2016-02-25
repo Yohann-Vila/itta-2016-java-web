@@ -26,8 +26,13 @@ public class SecurityController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
         out.println("Wel done !");
- 
-        out.print(getLogin("toto").getPassword()+" " +getLogin("toto").getLogin());
+        User utilisateur = getLogin("admin");
+        out.print(utilisateur.getLogin()+" - "+ utilisateur.getPassword() + " - " + utilisateur.getSeclevel()+"\n");
+               
+        utilisateur = getLogin("titi");
+        
+        out.print(utilisateur.getLogin()+" - "+ utilisateur.getPassword() + " - " + utilisateur.getSeclevel()+"\n");
+        
         out.println("Fin");
     }
     
