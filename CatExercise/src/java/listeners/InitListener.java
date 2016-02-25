@@ -39,10 +39,9 @@ public class InitListener implements ServletContextListener {
         catthreaddbtest.create(new CatThread("toto", "Deuxième fil de Toto", "http://www.cgdev.org/sites/default/files/cat8.jpg"));
         catthreaddbtest.create(new CatThread("tata", "Les chats c'est nul trololol", "http://g-ecx.images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg"));
         for(int i=0; i<53; i++) {
-            catthreaddbtest.create(new CatThread("toto", "Toto est un spammer", "http://taraflyart.com/wp-content/uploads/2011/09/MrBennet-spam-598x600.jpg"));
+            catthreaddbtest.create(new CatThread("toto", "Toto est un spammer " + i, "http://taraflyart.com/wp-content/uploads/2011/09/MrBennet-spam-598x600.jpg"));
             
         }
-        
         
         return catthreaddbtest;
     }
