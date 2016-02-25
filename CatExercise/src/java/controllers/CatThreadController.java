@@ -10,12 +10,21 @@ import javax.servlet.http.*;
 @WebServlet(name = "CatThreadController", urlPatterns = {"/thread"})
 public class CatThreadController extends HttpServlet {
 
-    private final ICatThreadDAO catThreadDAO = DAOFactory.getInstanceOfCatThread();
-    private final IUserDAO userDAO = DAOFactory.getInstanceOfUser();
-    private int nbByPage = 10;
+    private ICatThreadDAO catThreadDAO;
+    private IUserDAO userDAO;
+    private int nbByPage;
 
-
+   
     /*Overide*/
+    
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+        catThreadDAO = DAOFactory.getInstanceOfCatThread();
+        userDAO = DAOFactory.getInstanceOfUser();
+        nbByPage = 10;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
