@@ -8,7 +8,9 @@ import java.util.Date;
  * @author Yohann
  */
 public class CatThread {
-    private final int catThreadId;
+    static int count = 0;
+    
+    private final int catThreadId = getUniqueId();
     private final String login;
     private final String titre;
     private final String uriPhoto;
@@ -46,8 +48,7 @@ public class CatThread {
     
 
     
-    public CatThread(int catThreadId, String login, String titre, String uriPhoto) {
-        this.catThreadId = catThreadId;
+    public CatThread(String login, String titre, String uriPhoto) {
         this.login = login;
         this.titre = titre;
         this.uriPhoto = uriPhoto;
@@ -55,5 +56,9 @@ public class CatThread {
 
     public void deleteThread() {
         this.deleted = true;
+    }
+
+    private int getUniqueId() {
+        return ++count;
     }
 }
