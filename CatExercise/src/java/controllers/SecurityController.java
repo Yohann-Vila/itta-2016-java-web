@@ -12,21 +12,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Administrator
- */
 @WebServlet(name = "SecurityController", urlPatterns = {"/SecurityController"})
 public class SecurityController extends HttpServlet {
-    private IUserDAO userDAO=DAOFactory.getInstanceOfUser();
-    
-   
+
+    private IUserDAO userDAO;
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+        userDAO = DAOFactory.getInstanceOfUser();
+    }   
             
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("OK");
-        //createThread(title, uriPhoto, user)
-    } 
+        PrintWriter out = resp.getWriter();
+        out.println("Wel done !");
+ 
+        out.print(getLogin("toto").getPassword()+" " +getLogin("toto").getLogin());
+        out.println("Fin");
+    }
     
     private User getLogin(String login){
         User user=null;
