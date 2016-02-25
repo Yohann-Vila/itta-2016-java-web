@@ -11,7 +11,7 @@ public interface ICatThreadDAO {
     Collection<CatThread> findByLogin (String login);
     Collection<CatThread> findByTitle (String partialTitle);
     
-    boolean Modify(CatThread catThread);
-    boolean Create(CatThread catThread);
+    boolean modify(CatThread catThread);
+    boolean create(CatThread catThread);
     CatThread findByID(int id);
 }
