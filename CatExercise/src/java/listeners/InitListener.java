@@ -17,7 +17,7 @@ public class InitListener implements ServletContextListener {
         sce.getServletContext().setAttribute("userdbtest", createUserDBTest());
         
 //        // créer une db de threads pour tester
-//        sce.getServletContext().setAttribute("catthreaddbtest", createCatThreadDBTest());
+        sce.getServletContext().setAttribute("catthreaddbtest", createCatThreadDBTest());
 //        
 //        // créer une db de commentaires pour tester
 //        sce.getServletContext().setAttribute("commentdbtest", createCommentDBTest());
