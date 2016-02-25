@@ -24,12 +24,12 @@ public class CatThreadDAOTest implements ICatThreadDAO {
     }
 
     @Override
-    public boolean Modify(CatThread catThread) {
+    public boolean modify(CatThread catThread) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean Create(CatThread catThread) {
+    public boolean create(CatThread catThread) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
