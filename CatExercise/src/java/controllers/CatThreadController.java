@@ -13,22 +13,27 @@ public class CatThreadController extends HttpServlet {
     private ICatThreadDAO catThreadDAO;
     private IUserDAO userDAO;
     private int nbByPage;
+    private LinkedHashSet<CatThread> outSet;
+    private Collection<CatThread> filteredResult;
 
-   
     /*Overide*/
-    
+
     @Override
     public void init() throws ServletException {
         super.init(); //To change body of generated methods, choose Tools | Templates.
         catThreadDAO = DAOFactory.getInstanceOfCatThread();
         userDAO = DAOFactory.getInstanceOfUser();
         nbByPage = 10;
+        outSet = new LinkedHashSet<>();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
         out.println("OK");
+        String what = req.getParameter("what");
+        System.out.println(what);
+        filteredResult = finCatThread(what);
         int currentPage = 1;
         try {
             currentPage = Integer.parseInt(req.getParameter("page"));
@@ -36,8 +41,8 @@ public class CatThreadController extends HttpServlet {
             System.out.println(e.getMessage());
         }
         out.println(createThread("Test", "/photo/chat1.png", userDAO.find("toto")));
-        out.println("Test PAGINATION : "+currentPage);
-        
+        out.println("Test PAGINATION : " + currentPage);
+
         for (CatThread catThread : getThreadByPages(currentPage)) {
             out.println(catThread.getTitre());
         }
@@ -58,21 +63,39 @@ public class CatThreadController extends HttpServlet {
     }
 
     private LinkedHashSet<CatThread> getThreadByPages(int currentPage) {
-        LinkedHashSet<CatThread> outSet = new LinkedHashSet<>();
+        outSet.clear();
+        //LinkedHashSet<CatThread> outHashSet = new LinkedHashSet<>();
         int maxValue = currentPage * nbByPage;
         int stratValue = (currentPage - 1) * nbByPage;
         int i = 0;
-        Iterator<CatThread> it = catThreadDAO.getAll().iterator();
+        Iterator<CatThread> it = filteredResult.iterator();
         while (it.hasNext() && stratValue < maxValue) {
             if (i >= stratValue) {
                 outSet.add(it.next());
                 stratValue++;
-            }else{
+            } else {
                 it.next();
             }
             i++;
         }
         return outSet;
+    }
+
+    private Collection<CatThread> finCatThread(String what) {
+        if (what == null || what.equals("*") || what.isEmpty()) {
+            return catThreadDAO.getAll();
+        } else {
+            Collection<CatThread> c = new LinkedHashSet<>();
+            c.addAll(catThreadDAO.findByTitle(what));
+            User find = userDAO.find(what);
+            if (find != null) {
+                String login = find.getLogin();
+                if (login != null) {
+                    c.addAll(catThreadDAO.findByLogin(login));
+                }
+            }
+            return c;
+        }
     }
 
     private void setThreadPages(int nbByPage) {
