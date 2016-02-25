@@ -1,6 +1,8 @@
 package business;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  *
@@ -8,24 +10,52 @@ import java.util.Collection;
  */
 public class UserDAOTest implements IUserDAO {
 
+    Collection<User> users = new ArrayList<>();
+    
+    public UserDAOTest() {
+        
+    }
+    
+    
     @Override
     public Collection<User> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return users;
     }
 
     @Override
     public User find(String login) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (User user : users) {
+            if (user.getLogin().equals(login)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     @Override
     public boolean creat(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (user == null) {
+            return false;
+        }
+        
+        return users.add(user);
     }
 
     @Override
     public boolean modify(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (user == null) {
+            return false;
+        }
+        String login = user.getLogin();
+        User oldUser = find(login);
+        
+        if (oldUser == null) {
+            return false;
+        }
+        
+        users.remove(oldUser);
+        return users.add(user);
+        
     }
     
 }
