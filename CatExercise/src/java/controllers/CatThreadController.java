@@ -1,28 +1,28 @@
 package controllers;
 
-import business.CatThread;
-import business.DAOFactory;
-import business.ICatThreadDAO;
-import business.User;
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import business.*;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.annotation.*;
+import javax.servlet.http.*;
+
 
 @WebServlet(name = "CatThreadController", urlPatterns = {"/thread"})
 public class CatThreadController extends HttpServlet {
 
     private final ICatThreadDAO catThreadDAO = DAOFactory.getInstanceOfCatThread();
+    private final IUserDAO userDAO = DAOFactory.getInstanceOfUser();
+
 
 
     /*Overide*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("OK");
-        //createThread(title, uriPhoto, user)
+        PrintWriter out = resp.getWriter();
+        out.println("OK");
+        out.println(createThread("Test", "/photo/chat1.png", userDAO.find("toto")));
+        out.println("Fin");
+
     }
 
     /*Method Private*/
@@ -36,4 +36,5 @@ public class CatThreadController extends HttpServlet {
         }
         return b;
     }
+    
 }

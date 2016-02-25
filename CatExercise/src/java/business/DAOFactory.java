@@ -11,11 +11,11 @@ package business;
  */
 public class DAOFactory {
 
-    private static final String SOURCE = "RAM";
+    private static final String SOURCE = "MEMORY";
 
     public static IUserDAO getInstanceOfUser() {
         switch (SOURCE) {
-            case "RAM":
+            case "MEMORY":
                 return new UserDAOTest();
             default:
                 return new UserDAOTest();
@@ -23,7 +23,7 @@ public class DAOFactory {
     }
     public static ICatThreadDAO getInstanceOfCatThread() {
         switch (SOURCE) {
-            case "RAM":
+            case "MEMORY":
                 return new CatThreadDAOTest();
             default:
                 return new CatThreadDAOTest();
@@ -31,7 +31,7 @@ public class DAOFactory {
     }
     public static ICommentDAO getInstanceOfComment() {
         switch (SOURCE) {
-            case "RAM":
+            case "MEMORY":
                 return new CommentDAOTest();
             default:
                 return new CommentDAOTest();
