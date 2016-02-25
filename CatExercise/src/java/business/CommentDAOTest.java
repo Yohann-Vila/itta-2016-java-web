@@ -10,7 +10,6 @@ import java.util.LinkedHashSet;
  */
 public class CommentDAOTest implements ICommentDAO {
 
-    static int count = 0; // for unique ids
     static Collection<Comment> comments = new LinkedHashSet<>();
     
     @Override
