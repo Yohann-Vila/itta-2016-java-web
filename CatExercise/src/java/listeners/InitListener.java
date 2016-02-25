@@ -13,14 +13,9 @@ public class InitListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        // créer une db user pour tester
-        sce.getServletContext().setAttribute("userdbtest", createUserDBTest());
-        
-//        // créer une db de threads pour tester
-        sce.getServletContext().setAttribute("catthreaddbtest", createCatThreadDBTest());
-//        
-//        // créer une db de commentaires pour tester
-//        sce.getServletContext().setAttribute("commentdbtest", createCommentDBTest());
+        createUserDBTest();
+        createCatThreadDBTest();
+        createCommentDBTest();
     }
 
     private IUserDAO createUserDBTest() {
