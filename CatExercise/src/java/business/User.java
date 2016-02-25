@@ -3,17 +3,17 @@ package business;
 import java.util.Date;
 
 public class User {
-
-    public User(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
     private String login;
     private String password;
     private String pseudo;
     private boolean isban;
     private int seclevel;
     private Date creationdate;
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
     
     public String getPassword() {
         return password;
