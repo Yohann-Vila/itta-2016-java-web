@@ -10,7 +10,7 @@ import java.util.HashSet;
  */
 public class UserDAOTest implements IUserDAO {
 
-    Collection<User> users = new ArrayList<>();
+    static Collection<User> users = new ArrayList<>();
     
     public UserDAOTest() {
         
