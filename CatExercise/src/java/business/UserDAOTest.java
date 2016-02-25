@@ -16,7 +16,6 @@ public class UserDAOTest implements IUserDAO {
         
     }
     
-    
     @Override
     public Collection<User> getAll() {
         return users;
