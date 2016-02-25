@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityController extends HttpServlet {
     private IUserDAO userDAO=DAOFactory.getInstanceOfUser();
     
+   
+            
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.getWriter().println("OK");
