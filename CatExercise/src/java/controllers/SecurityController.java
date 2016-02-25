@@ -32,8 +32,9 @@ public class SecurityController extends HttpServlet {
         utilisateur = getLogin("titi");
         
         out.print(utilisateur.getLogin()+" - "+ utilisateur.getPassword() + " - " + utilisateur.getSeclevel()+"\n");
-        
-        out.println("Fin");
+   //     utilisateur = getLogin("ghjfs");  
+   //     out.print(utilisateur.getLogin()+" - "+ utilisateur.getPassword() + " - " + utilisateur.getSeclevel()+"\n");        
+        out.println("Fin du doGet SecurityControler");
     }
     
     private User getLogin(String login){
