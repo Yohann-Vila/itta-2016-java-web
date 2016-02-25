@@ -3,6 +3,8 @@ package business;
 import java.util.Date;
 
 public class Comment {
+    static int count = 0; // for unique ids
+    
     private final int commentId;
     private final int threadId;
     private String login;
@@ -10,8 +12,8 @@ public class Comment {
     private boolean deleted;
     private String content;
     
-    public Comment(int commentId, int threadId, String login, String content) {
-        this.commentId = commentId;
+    public Comment(int threadId, String login, String content) {
+        this.commentId = ++count;
         this.threadId = threadId;
         this.login = login;
         this.content = content;
@@ -42,8 +44,8 @@ public class Comment {
         return deleted;
     }
 
-    public void setDeleted(boolean isDeleted) {
-        this.deleted = isDeleted;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public String getContent() {
