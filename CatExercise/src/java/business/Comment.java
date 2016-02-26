@@ -3,8 +3,6 @@ package business;
 import java.util.Date;
 
 public class Comment {
-    static int count = 0; // for unique ids
-    
     private int commentId;
 
 
