@@ -33,7 +33,7 @@ public class UserDAOTest implements IUserDAO {
     }
 
     @Override
-    public boolean create(User user) {
+    public boolean insert(User user) {
         if (user == null) {
             return false;
         }

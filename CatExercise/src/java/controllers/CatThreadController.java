@@ -110,7 +110,7 @@ public class CatThreadController extends HttpServlet {
         CatThread c = new CatThread(user.getLogin(), title, uriPhoto);
         boolean b = false;
         try {
-            b = catThreadDAO.create(c);
+            b = catThreadDAO.insert(c);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -156,7 +156,7 @@ public class CatThreadController extends HttpServlet {
         c.deleteThread();
         boolean status = false;
         try {
-            status = catThreadDAO.modify(c);
+            status = catThreadDAO.update(c);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

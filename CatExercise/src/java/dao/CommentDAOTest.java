@@ -33,7 +33,7 @@ public class CommentDAOTest implements ICommentDAO {
     }
 
     @Override
-    public boolean create(Comment comment) {
+    public boolean insert(Comment comment) {
         if (comment == null) {
             return false;
         }
@@ -43,7 +43,7 @@ public class CommentDAOTest implements ICommentDAO {
     }
 
     @Override
-    public boolean modify(Comment comment) {
+    public boolean update(Comment comment) {
         if (comment == null) {
             return false;
         }

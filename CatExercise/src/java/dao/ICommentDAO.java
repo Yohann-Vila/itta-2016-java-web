@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface ICommentDAO {
     Collection<Comment> getPostsFromThread(int IdThread,boolean actif);
-    boolean create(Comment c);
-    boolean modify(Comment c);
+    boolean insert(Comment c);
+    boolean update(Comment c);
     Comment findByID(int commentID);
 }

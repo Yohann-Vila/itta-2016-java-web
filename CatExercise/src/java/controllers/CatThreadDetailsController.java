@@ -96,7 +96,7 @@ public class CatThreadDetailsController extends HttpServlet {
         Comment comment = new Comment(threadID, user, content);
         boolean created = false;
         try {
-            created = commentDAO.create(comment);
+            created = commentDAO.insert(comment);
         }
         catch(Exception ex) {
             System.out.println(ex.getMessage());

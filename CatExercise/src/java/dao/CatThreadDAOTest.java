@@ -59,7 +59,7 @@ public class CatThreadDAOTest implements ICatThreadDAO {
     }
 
     @Override
-    public boolean modify(CatThread catThread) {
+    public boolean update(CatThread catThread) {
         if (catThread == null) {
             return false;
         }
@@ -76,7 +76,7 @@ public class CatThreadDAOTest implements ICatThreadDAO {
     }
 
     @Override
-    public boolean create(CatThread catThread) {
+    public boolean insert(CatThread catThread) {
         if (catThread == null) {
             return false;
         }

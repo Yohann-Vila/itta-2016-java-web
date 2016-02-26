@@ -12,7 +12,7 @@ public interface ICatThreadDAO {
     Collection<CatThread> findByLogin (String login,boolean actif);
     Collection<CatThread> findByTitle (String partialTitle,boolean actif);
     
-    boolean modify(CatThread catThread);
-    boolean create(CatThread catThread);
+    boolean update(CatThread catThread);
+    boolean insert(CatThread catThread);
     CatThread findByID(int id);
 }

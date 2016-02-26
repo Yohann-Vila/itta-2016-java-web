@@ -58,7 +58,7 @@ public class UserController extends HttpServlet {
         newuser.setCreationdate(new Date());
 
         try {
-            if (userDAO.create(newuser)) {
+            if (userDAO.insert(newuser)) {
                 User chercheuser = userDAO.find(newuser.getLogin());
                 out.println("L'utilisateur " + chercheuser.getLogin() + " - " + chercheuser.getPassword() + " - " + chercheuser.getPseudo() + " - "
                         + chercheuser.getCreationdate().toString() + " - " + chercheuser.getSeclevel() + " - " + chercheuser.getBanish());

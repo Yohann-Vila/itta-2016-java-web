@@ -27,13 +27,13 @@ public class InitListener implements ServletContextListener {
     private IUserDAO createUserDBTest() {
         IUserDAO userDBTest = new UserDAOTest();
         
-        userDBTest.create(new User("toto", ""));
-        userDBTest.create(new User("titi", "password")); 
-        userDBTest.create(new User("tata", "password"));
+        userDBTest.insert(new User("toto", ""));
+        userDBTest.insert(new User("titi", "password")); 
+        userDBTest.insert(new User("tata", "password"));
         
         User admin = new User("admin", "admin");
         admin.setSeclevel(100);
-        userDBTest.create(admin);
+        userDBTest.insert(admin);
         
         return userDBTest;
     }
@@ -41,11 +41,11 @@ public class InitListener implements ServletContextListener {
     private ICatThreadDAO createCatThreadDBTest() {
         ICatThreadDAO catThreadDBTest = new CatThreadDAOTest();
         
-        catThreadDBTest.create(new CatThread("toto", "Le premier fil de Toto", "http://www.cats.org.uk/uploads/images/pages/photo_latest14.jpg"));
-        catThreadDBTest.create(new CatThread("toto", "Deuxième fil de Toto", "http://www.cgdev.org/sites/default/files/cat8.jpg"));
-        catThreadDBTest.create(new CatThread("tata", "Les chats c'est nul trololol", "http://g-ecx.images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg"));
+        catThreadDBTest.insert(new CatThread("toto", "Le premier fil de Toto", "http://www.cats.org.uk/uploads/images/pages/photo_latest14.jpg"));
+        catThreadDBTest.insert(new CatThread("toto", "Deuxième fil de Toto", "http://www.cgdev.org/sites/default/files/cat8.jpg"));
+        catThreadDBTest.insert(new CatThread("tata", "Les chats c'est nul trololol", "http://g-ecx.images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg"));
         for(int i=0; i<53; i++) {
-            catThreadDBTest.create(new CatThread("toto", "Toto est un spammer " + i, "http://taraflyart.com/wp-content/uploads/2011/09/MrBennet-spam-598x600.jpg"));
+            catThreadDBTest.insert(new CatThread("toto", "Toto est un spammer " + i, "http://taraflyart.com/wp-content/uploads/2011/09/MrBennet-spam-598x600.jpg"));
         }
         
         return catThreadDBTest;
@@ -54,8 +54,8 @@ public class InitListener implements ServletContextListener {
     private ICommentDAO createCommentDBTest() {
         ICommentDAO commentDBTest = new CommentDAOTest();
         
-        commentDBTest.create(new Comment(1, "titi", "First !"));
-        commentDBTest.create(new Comment(1, "anonymous", "$$$$$$ --- BUY CHEAP VIAGRA GO TO http://www.ittacademy.ch BEST QUALITY ££$$$$ -----"));
+        commentDBTest.insert(new Comment(1, "titi", "First !"));
+        commentDBTest.insert(new Comment(1, "anonymous", "$$$$$$ --- BUY CHEAP VIAGRA GO TO http://www.ittacademy.ch BEST QUALITY ££$$$$ -----"));
         
         return new CommentDAOTest();
     }    
