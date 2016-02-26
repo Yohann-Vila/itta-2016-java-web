@@ -15,7 +15,7 @@ public class CatThreadController extends HttpServlet {
     private int nbByPage;
     private LinkedHashSet<CatThread> outSet;
     private Collection<CatThread> filteredResult;
-
+    private boolean filterDeletedThread;
     /*Overide*/
     @Override
     public void init() throws ServletException {
@@ -23,6 +23,7 @@ public class CatThreadController extends HttpServlet {
         catThreadDAO = DAOFactory.getInstanceOfCatThread();
         userDAO = DAOFactory.getInstanceOfUser();
         nbByPage = 10;
+        filterDeletedThread = true;
         outSet = new LinkedHashSet<>();
     }
 
@@ -70,7 +71,6 @@ public class CatThreadController extends HttpServlet {
 
     private LinkedHashSet<CatThread> getThreadByPages(int currentPage) {
         outSet.clear();
-        //LinkedHashSet<CatThread> outHashSet = new LinkedHashSet<>();
         int maxValue = currentPage * nbByPage;
         int stratValue = (currentPage - 1) * nbByPage;
         int i = 0;
@@ -89,15 +89,15 @@ public class CatThreadController extends HttpServlet {
 
     private Collection<CatThread> finCatThread(String what) {
         if (what == null || what.equals("*") || what.isEmpty()) {
-            return catThreadDAO.getAll(true);
+            return catThreadDAO.getAll(filterDeletedThread);
         } else {
             Collection<CatThread> c = new LinkedHashSet<>();
-            c.addAll(catThreadDAO.findByTitle(what,true));
+            c.addAll(catThreadDAO.findByTitle(what,filterDeletedThread));
             User find = userDAO.find(what);
             if (find != null) {
                 String login = find.getLogin();
                 if (login != null) {
-                    c.addAll(catThreadDAO.findByLogin(login,true));
+                    c.addAll(catThreadDAO.findByLogin(login,filterDeletedThread));
                 }
             }
             return c;
