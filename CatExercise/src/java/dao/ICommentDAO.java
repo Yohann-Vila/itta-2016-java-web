@@ -1,6 +1,7 @@
 
-package business;
+package dao;
 
+import business.Comment;
 import java.util.Collection;
 
 public interface ICommentDAO {

@@ -7,9 +7,9 @@ package controllers;
 
 import business.CatThread;
 import business.Comment;
-import business.DAOFactory;
-import business.ICatThreadDAO;
-import business.ICommentDAO;
+import dao.DAOFactory;
+import dao.ICatThreadDAO;
+import dao.ICommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;

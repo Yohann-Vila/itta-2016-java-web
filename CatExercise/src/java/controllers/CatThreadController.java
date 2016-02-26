@@ -1,5 +1,8 @@
 package controllers;
 
+import dao.DAOFactory;
+import dao.ICatThreadDAO;
+import dao.IUserDAO;
 import business.*;
 import java.io.*;
 import java.util.*;

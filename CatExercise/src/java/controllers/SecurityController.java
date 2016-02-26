@@ -1,7 +1,7 @@
 package controllers;
 
-import business.DAOFactory;
-import business.IUserDAO;
+import dao.DAOFactory;
+import dao.IUserDAO;
 import business.User;
 import java.io.IOException;
 import java.io.PrintWriter;
