@@ -32,7 +32,7 @@
         <div><p>Commentaires :</p></div><br>
         <div>
             <c:forEach items="${currentCatThread.comments}" var="comment" varStatus="s" step="1">
-                <p> Le ${comment.creationDate}, {comment.login} a écrit : </p>
+                <p> Le ${comment.creationDate}, ${comment.login} a écrit : </p>
                 <p>${comment.content}</p>
             </c:forEach>
         </div>
@@ -47,7 +47,7 @@
             Composer un nouveau commentaire :
         </p>
         <form>
-            <textarea class="form-control" name="newcomment" cols="60" rows="5" id="commentfield" />
+            <textarea class="form-control" name="newcomment" cols="60" rows="5" id="commentfield" ></textarea>
             <button type="button" class="btn btn-primary">Envoyer</button>
         </form>
     </div>
