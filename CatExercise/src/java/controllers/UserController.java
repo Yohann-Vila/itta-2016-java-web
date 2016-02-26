@@ -29,9 +29,21 @@ public class UserController extends HttpServlet {
         out.println("Début Usercontroller");
         Collection<User> xx = getAll(0);
         for (User utilisateur : xx) {
-            out.println(utilisateur.getLogin());
+            out.println("user : \t"+utilisateur.getLogin()+" - \t"+ utilisateur.getIsban()+" - \t"+ utilisateur.getSeclevel());
         }
-
+        
+        out.println("banish user : titi ");
+        
+        if(banUser("titi",100)!= null)
+        {
+           out.println("nouveau status utilisateur : \n");
+           User user_titi = userDAO.find("titi");
+           out.println(user_titi.getLogin()+" - "+ user_titi.getIsban());
+        }
+        else 
+        {
+            out.println("utilisateur non trouvé");
+        }
         out.println("Fin : Début Usercontroller");
     }  
     
@@ -51,13 +63,21 @@ public class UserController extends HttpServlet {
     }
     User banUser(String login,int seclevel){
         User banuser = null;
-        try
+        if(seclevel==100)// mettre une  => enum user.security.CONSTANTE
         {
-            banuser = userDAO.find(login);
-        }
-        catch(Exception e)
-        {
-             System.out.println(e.getMessage());
+            try
+            {
+            
+                banuser = userDAO.find(login);
+                banuser.setIsban(true);
+                userDAO.modify(banuser);
+            
+           
+            }
+            catch(Exception e)
+            {
+                 System.out.println(e.getMessage());
+            }
         }
         return banuser;
     }
