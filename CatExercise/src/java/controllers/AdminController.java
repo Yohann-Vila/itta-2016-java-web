@@ -78,7 +78,6 @@ public class AdminController extends HttpServlet {
             newuser.setPseudo(login);
         }
         newuser.setCreationdate(new Date());
-        newuser.setCreationdate(new Date());
 
         try {
             if (userDAO.creat(newuser)) {
@@ -98,7 +97,7 @@ public class AdminController extends HttpServlet {
 
     User banUser(String login, int seclevel) {
         User banuser = null;
-        if (seclevel == 100)// mettre une  => enum user.security.CONSTANTE
+        if (seclevel == User.ADMINISTRATEUR)// mettre une  => enum user.security.CONSTANTE
         {
             try {
 
