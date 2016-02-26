@@ -12,6 +12,7 @@ import business.ICatThreadDAO;
 import business.ICommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,8 +38,35 @@ public class CatThreadDetailsController extends HttpServlet {
 
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+      
+        PrintWriter out = resp.getWriter();
+        
+        out.println("ok");
+        
+        int id = 1;
+        CatThread thread = getThreadByID(id, true);
+        if ( thread == null) {
+            out.println("Aucun thread trouvé avec ID " + id);
+            return;
+        }
+        
+        out.println("Titre : " + thread.getTitre());
+        out.println("Thread id : " + thread.getCatThreadId());
+        out.println("Crée par : " + thread.getLogin());        
+        out.println("le : " + thread.getCreationDate());  
+        out.println("url : " + thread.getUriPhoto());  
+        out.println("commentaires :\n---");
+        Collection<Comment> comments = thread.getComments();
+        for (Comment comment : comments) {
+            out.println(" N°" + comment.getCommentID() + " crée par " + comment.getLogin());
+            out.println(" crée le " + comment.getCreationDate() );
+            out.println(comment.getContent());
+            out.println("---");
+        }
+        
+        
         
         
     }
