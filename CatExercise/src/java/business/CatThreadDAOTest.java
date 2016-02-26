@@ -4,15 +4,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
  * @author Yohann
  */
 public class CatThreadDAOTest implements ICatThreadDAO {
-    
+    static AtomicInteger count = new AtomicInteger(0); // for id autogeneration
     static Set<CatThread> catThreads = new LinkedHashSet<>();
     
     @Override
@@ -64,8 +63,11 @@ public class CatThreadDAOTest implements ICatThreadDAO {
         if (catThread == null) {
             return false;
         }
+        // set unique id
+        catThread.setCatThreadId(count.incrementAndGet());
         return(catThreads.add(catThread));
     }
+    
     @Override
     public CatThread findByID(int id) {
         for (CatThread catThread : catThreads) {

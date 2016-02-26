@@ -9,16 +9,18 @@ import java.util.Date;
  */
 public class CatThread {
 
-    static int count = 0;
-
-    private final int catThreadId = getUniqueId();
+    private int catThreadId;
     private final String login;
     private final String titre;
     private final String uriPhoto;
     private boolean deleted = false;
     private final Date creationDate = new Date();
     Collection<Comment> comments;
-
+    
+    public void setCatThreadId(int catThreadId) {
+        this.catThreadId = catThreadId;
+    }
+    
     public int getCatThreadId() {
         return catThreadId;
     }
@@ -55,10 +57,6 @@ public class CatThread {
 
     public void deleteThread() {
         this.deleted = true;
-    }
-
-    private int getUniqueId() {
-        return ++count;
     }
 
     @Override
