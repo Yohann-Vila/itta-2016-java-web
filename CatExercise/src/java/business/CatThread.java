@@ -76,4 +76,9 @@ public class CatThread {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return getCatThreadId() + ": "+getTitre();
+    }
+    
 }

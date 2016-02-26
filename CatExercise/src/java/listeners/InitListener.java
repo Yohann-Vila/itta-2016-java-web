@@ -40,7 +40,6 @@ public class InitListener implements ServletContextListener {
         catThreadDBTest.create(new CatThread("tata", "Les chats c'est nul trololol", "http://g-ecx.images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg"));
         for(int i=0; i<53; i++) {
             catThreadDBTest.create(new CatThread("toto", "Toto est un spammer " + i, "http://taraflyart.com/wp-content/uploads/2011/09/MrBennet-spam-598x600.jpg"));
-            
         }
         
         return catThreadDBTest;

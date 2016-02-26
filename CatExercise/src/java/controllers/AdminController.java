@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "UserController", urlPatterns = {"/usercontroller"})
-public class UserController extends HttpServlet {
+@WebServlet(name = "AdminController", urlPatterns = {"/admincontroller"})
+public class AdminController extends HttpServlet {
 
     private IUserDAO userDAO;
 
@@ -27,27 +27,51 @@ public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
         out.println("Début Usercontroller");
+        Collection<User> xx = getAll(0);
+        for (User utilisateur : xx) {
+            out.println("user : \t" + utilisateur.getLogin() + " - \t" + utilisateur.getIsban() + " - \t" + utilisateur.getSeclevel());
+        }
 
+        out.println("banish user : titi ");
 
+        if (banUser("titi", User.ADMINISTRATEUR) != null) {
+            out.println("nouveau status utilisateur : \n");
+            User user_titi = userDAO.find("titi");
+            out.println(user_titi.getLogin() + " - " + user_titi.getIsban());
+        } else {
+            out.println("utilisateur non trouvé");
+        }
 
         out.println("Création de lulu ");
 
-        out.println(" appel : \n" + createUser("Lulu", "motdepasse", "pseudolulu"));
+        out.println(" appel : \n" + AdcreateUser("Lulu", "motdepasse", "pseudolulu"));
 
         out.println("Création de toto ");
 
-        out.println(" appel : \n" + createUser("toto", "motdepasse", "pseudototo"));
+        out.println(" appel : \n" + AdcreateUser("toto", "motdepasse", "pseudototo"));
 
         out.println("Fin : Usercontroller");
     }
- 
-    boolean createUser(String login, String password, String pseudo) {
+
+    private Collection<User> getAll(int seclevel) {
+        Collection<User> cuser = null;
+        try {
+            cuser = userDAO.getAll();
+            out.println("prise utilisateur");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return cuser;
+    }
+
+    boolean AdcreateUser(String login, String password, String pseudo) {
         
         User newuser = new User(login,password);
         boolean retour = false;
 
         newuser.setIsban(false);
-        newuser.setSeclevel(0);
+        newuser.setSeclevel(User.UTILISATEUR);
         if (pseudo != null) {
             newuser.setPseudo(pseudo);
         } else {
@@ -72,6 +96,21 @@ public class UserController extends HttpServlet {
         return retour;
     }
 
- 
+    User banUser(String login, int seclevel) {
+        User banuser = null;
+        if (seclevel == 100)// mettre une  => enum user.security.CONSTANTE
+        {
+            try {
+
+                banuser = userDAO.find(login);
+                banuser.setIsban(true);
+                userDAO.modify(banuser);
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return banuser;
+    }
 
 }
