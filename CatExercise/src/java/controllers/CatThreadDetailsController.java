@@ -46,6 +46,19 @@ public class CatThreadDetailsController extends HttpServlet {
         out.println("ok");
         
         int id = 1;
+        basicDetailsPrintThread(id, out);
+        out.println("---------------------------------------------");
+        int newcommentid = addComment(id, "bob", "Ceci est un commentaire crée récemment.");
+        basicDetailsPrintThread(id, out);        
+        out.println("---------------------------------------------");
+        markCommentDeleted(newcommentid);
+        basicDetailsPrintThread(id, out);        
+        out.println("---------------------------------------------");        
+    }
+
+    /* private methods */
+    
+    private void basicDetailsPrintThread(int id, PrintWriter out) {
         CatThread thread = getThreadByID(id, true);
         if ( thread == null) {
             out.println("Aucun thread trouvé avec ID " + id);
@@ -57,21 +70,15 @@ public class CatThreadDetailsController extends HttpServlet {
         out.println("Crée par : " + thread.getLogin());        
         out.println("le : " + thread.getCreationDate());  
         out.println("url : " + thread.getUriPhoto());  
-        out.println("commentaires :\n---");
+        out.println("commentaires :\n");
         Collection<Comment> comments = thread.getComments();
         for (Comment comment : comments) {
+            out.println("---");            
             out.println(" N°" + comment.getCommentID() + " crée par " + comment.getLogin());
             out.println(" crée le " + comment.getCreationDate() );
             out.println(comment.getContent());
-            out.println("---");
-        }
-        
-        
-        
-        
+        }        
     }
-
-    /* private methods */
     
     private CatThread getThreadByID(int id, boolean actif) {
         CatThread catThread = catThreadDAO.findByID(id);
@@ -85,17 +92,26 @@ public class CatThreadDetailsController extends HttpServlet {
         return catThread;
     }
     
-    private boolean addComment(int threadID, String user, String content) {
+    private int addComment(int threadID, String user, String content) {
         Comment comment = new Comment(threadID, user, content);
-        boolean result = false;
+        boolean created = false;
         try {
-            result = commentDAO.create(comment);
+            created = commentDAO.create(comment);
         }
         catch(Exception ex) {
             System.out.println(ex.getMessage());
         }
         
-        return result;
+        if(created) {
+            return comment.getCommentID();
+        } else {
+            return -1;
+        }
+    }
+    
+    private void markCommentDeleted(int commentid) {
+        Comment comment = commentDAO.findByID(commentid);
+        markCommentDeleted(comment);
     }
     
     private void markCommentDeleted(Comment comment) {
