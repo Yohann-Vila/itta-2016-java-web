@@ -46,7 +46,7 @@ public class UserController extends HttpServlet {
         User newuser = new User(login,password);
         boolean retour = false;
 
-        newuser.setIsban(false);
+        newuser.setBanish(false);
         newuser.setSeclevel(0);
         if (pseudo != null) {
             newuser.setPseudo(pseudo);
@@ -59,7 +59,7 @@ public class UserController extends HttpServlet {
             if (userDAO.create(newuser)) {
                 User chercheuser = userDAO.find(newuser.getLogin());
                 out.println("L'utilisateur " + chercheuser.getLogin() + " - " + chercheuser.getPassword() + " - " + chercheuser.getPseudo() + " - "
-                        + chercheuser.getCreationdate().toString() + " - " + chercheuser.getSeclevel() + " - " + chercheuser.getIsban());
+                        + chercheuser.getCreationdate().toString() + " - " + chercheuser.getSeclevel() + " - " + chercheuser.getBanish());
                 retour = true;
             } else {
                 out.println(" Utilisateur existe déjà ");
