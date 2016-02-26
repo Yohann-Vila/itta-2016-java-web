@@ -40,7 +40,12 @@ public class CatThreadDetailsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-      
+      //basicTests(resp);
+       
+    }
+
+    /* private methods */
+    private void basicTests(HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
         
         out.println("ok");
