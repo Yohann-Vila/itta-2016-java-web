@@ -39,11 +39,11 @@ public class User {
         this.pseudo = pseudo;
     }
 
-    public boolean isBan() {
+    public boolean getIsban() {
         return isban;
     }
 
-    public void setBan(boolean isban) {
+    public void setIsban(boolean isban) {
         this.isban = isban;
     }
 
