@@ -11,49 +11,65 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Yohann
  */
 public class CatThreadDAOTest implements ICatThreadDAO {
+
     static AtomicInteger count = new AtomicInteger(0); // for id autogeneration
     static Set<CatThread> catThreads = new LinkedHashSet<>();
-    
+
     @Override
-    public Collection<CatThread> getAll() {
-        return Collections.unmodifiableSet(catThreads);
+    public Collection<CatThread> getAll(boolean actif) {
+        Set<CatThread> results = new LinkedHashSet<>();
+        if (actif) {
+            for (CatThread thread : catThreads) {
+                if (!thread.isDeleted()) {
+                    results.add(thread);
+                }
+            }
+            return results;
+        } else {
+            return Collections.unmodifiableSet(catThreads);
+        }
     }
 
     @Override
-    public Collection<CatThread> findByLogin(String login) {
+    public Collection<CatThread> findByLogin(String login, boolean actif) {
         Set<CatThread> results = new LinkedHashSet<>();
         for (CatThread thread : catThreads) {
             if (thread.getLogin().equals(login)) {
-                results.add(thread);
+                if (!(actif && thread.isDeleted())) {
+                    results.add(thread);
+                }
             }
         }
         return Collections.unmodifiableSet(results);
     }
 
     @Override
-    public Collection<CatThread> findByTitle(String partialTitle) {
+    public Collection<CatThread> findByTitle(String partialTitle, boolean actif) {
         String partialTitleLowered = partialTitle.toLowerCase();
         Set<CatThread> results = new LinkedHashSet<>();
         for (CatThread thread : catThreads) {
             if (thread.getTitre().toLowerCase().contains(partialTitleLowered)) {
-                results.add(thread);
+                if (!(actif && thread.isDeleted())) {
+                    results.add(thread);
+                }
             }
         }
-        return Collections.unmodifiableSet(results);    }
+        return Collections.unmodifiableSet(results);
+    }
 
     @Override
     public boolean modify(CatThread catThread) {
         if (catThread == null) {
             return false;
         }
-        
+
         int id = catThread.getCatThreadId();
         CatThread oldCatThread = findByID(id);
-        
+
         if (oldCatThread == null) {
             return false;
         }
-        
+
         catThreads.remove(oldCatThread);
         return catThreads.add(catThread);
     }
@@ -65,9 +81,9 @@ public class CatThreadDAOTest implements ICatThreadDAO {
         }
         // set unique id
         catThread.setCatThreadId(count.incrementAndGet());
-        return(catThreads.add(catThread));
+        return (catThreads.add(catThread));
     }
-    
+
     @Override
     public CatThread findByID(int id) {
         for (CatThread catThread : catThreads) {
@@ -77,5 +93,5 @@ public class CatThreadDAOTest implements ICatThreadDAO {
         }
         return null;
     }
-    
+
 }

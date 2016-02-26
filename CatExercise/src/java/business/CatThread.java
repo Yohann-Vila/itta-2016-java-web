@@ -48,6 +48,10 @@ public class CatThread {
     public Collection<Comment> getComments() {
         return comments;
     }
+    
+    public void setComments(Collection<Comment> comments) {
+        this.comments = comments;
+    }
 
     public CatThread(String login, String titre, String uriPhoto) {
         this.login = login;
@@ -72,4 +76,9 @@ public class CatThread {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return getCatThreadId() + ": "+getTitre();
+    }
+    
 }
