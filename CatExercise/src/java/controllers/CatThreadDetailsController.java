@@ -13,6 +13,7 @@ import dao.ICommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,8 +40,34 @@ public class CatThreadDetailsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-      //basicTests(resp);
+
        
+        //idthread
+        String idThreadString = req.getParameter("idthread");
+        if (idThreadString == null) {
+            basicTests(resp);
+            return;
+        }
+        
+        Integer idThread = null;
+        try {
+             idThread = Integer.parseInt(idThreadString);            
+        } catch (NumberFormatException ex) {
+            System.out.println("thread id " + idThreadString + " not found in CatThreadDetails controller.");
+            throw new ServletException("thread id " + idThreadString + " not found in CatThreadDetails controller.");            
+        }
+
+        CatThread currentCatThread = getThreadByID(idThread, true);
+        if (currentCatThread == null) {
+            System.out.println("thread id " + idThreadString + " not found in CatThreadDetails controller.");
+            throw new ServletException("thread id " + idThreadString + " not found in CatThreadDetails controller.");               
+        }
+        
+        req.getSession().setAttribute("currentCatThread", currentCatThread);
+        
+        RequestDispatcher rd = req.getRequestDispatcher("/threaddetail.jsp");
+        rd.forward(req, resp);
+        
     }
 
     /* private methods */
