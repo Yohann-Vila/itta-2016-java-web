@@ -43,12 +43,11 @@ public class CatThreadController extends HttpServlet {
         req.getSession().setAttribute("catThreadList", getThreadByPages(filteredResult, nbByPage, currentPage));
         req.setAttribute("currentPage", currentPage);
         req.setAttribute("what", what);
-        
         RequestDispatcher rd = req.getRequestDispatcher("/thread-list.jsp");
         rd.forward(req, resp);
 
     }
-
+     /*Method Private*/
     private int initOrDefaultNbByPage(HttpServletRequest req) {
         int nb = 10;
         try {
@@ -67,7 +66,6 @@ public class CatThreadController extends HttpServlet {
         }
         return nb;
     }
-    
     private TreeSet<Integer> getPageList(Collection<CatThread> result, int rsByPage) {
         TreeSet<Integer> pageList = new TreeSet<>();
         for (int i = 1; i <= (result.size() / rsByPage) + 1; i++) {
@@ -75,8 +73,6 @@ public class CatThreadController extends HttpServlet {
         }
         return pageList;
     }
-
-    /*Method Private*/
     private CatThread createThread(String title, String uriPhoto, User user) {
         CatThread c = new CatThread(user.getLogin(), title, uriPhoto);
         boolean b = false;
@@ -87,7 +83,6 @@ public class CatThreadController extends HttpServlet {
         }
         return b ? c : null;
     }
-
     private LinkedHashSet<CatThread> getThreadByPages(Collection<CatThread> result, int rsByPage, int currentPage) {
         LinkedHashSet<CatThread> outSet = new LinkedHashSet<>();
         int maxValue = currentPage * rsByPage;
@@ -105,7 +100,6 @@ public class CatThreadController extends HttpServlet {
         }
         return outSet;
     }
-
     private Collection<CatThread> finCatThread(String what) {
         if (what == null || what.equals("*") || what.isEmpty()) {
             return catThreadDAO.getAll(filterDeletedThread);
@@ -122,7 +116,6 @@ public class CatThreadController extends HttpServlet {
             return c;
         }
     }
-
     private boolean removeThread(CatThread c) {
         c.deleteThread();
         boolean status = false;
@@ -133,5 +126,4 @@ public class CatThreadController extends HttpServlet {
         }
         return status;
     }
-
 }
