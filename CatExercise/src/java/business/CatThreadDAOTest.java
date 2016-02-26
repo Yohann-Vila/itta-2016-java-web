@@ -66,7 +66,13 @@ public class CatThreadDAOTest implements ICatThreadDAO {
         }
         return(catThreads.add(catThread));
     }
-
+    @Override
+    public boolean delete(CatThread catThread) {
+        if (catThread == null) {
+            return false;
+        }
+        return(catThreads.remove(catThread));
+    }
     @Override
     public CatThread findByID(int id) {
         for (CatThread catThread : catThreads) {

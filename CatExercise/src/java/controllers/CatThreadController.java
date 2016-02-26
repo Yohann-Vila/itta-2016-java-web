@@ -101,4 +101,13 @@ public class CatThreadController extends HttpServlet {
     private void setThreadPages(int nbByPage) {
         this.nbByPage = nbByPage;
     }
+    private boolean removeThread(CatThread c) {
+        boolean status = false;
+        try {
+            status = catThreadDAO.delete(c);
+        }catch(Exception e){
+            System.out.println(e.getMessage()); 
+        }
+        return status;
+    }
 }
