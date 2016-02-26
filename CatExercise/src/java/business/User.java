@@ -10,6 +10,9 @@ public class User {
     private int seclevel;
     private Date creationdate;
 
+    public static final int ADMINISTRATEUR=100;
+    public static final int UTILISATEUR=0;
+    
     public User(String login, String password) {
         this.login = login;
         this.password = password;
