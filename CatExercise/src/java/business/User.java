@@ -6,7 +6,7 @@ public class User {
     private String login;
     private String password;
     private String pseudo;
-    private boolean isban;
+    private boolean banish;
     private int seclevel;
     private Date creationdate;
 
@@ -42,16 +42,18 @@ public class User {
         this.pseudo = pseudo;
     }
 
-    public boolean getIsban() {
-        return isban;
-    }
+//    public boolean getIsban() {
+//        return banish;
+//    }
 
-    public void setIsban(boolean isban) {
-        this.isban = isban;
+    public void setBanish(boolean banish) {
+        this.banish = banish;
     }
-
     public int getSeclevel() {
         return seclevel;
+    }
+    public boolean getBanish() {
+        return banish;
     }
 
     public void setSeclevel(int seclevel) {
