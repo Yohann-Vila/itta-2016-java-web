@@ -21,13 +21,13 @@ public class InitListener implements ServletContextListener {
     private IUserDAO createUserDBTest() {
         IUserDAO userDBTest = new UserDAOTest();
         
-        userDBTest.creat(new User("toto", ""));
-        userDBTest.creat(new User("titi", "password")); 
-        userDBTest.creat(new User("tata", "password"));
+        userDBTest.create(new User("toto", ""));
+        userDBTest.create(new User("titi", "password")); 
+        userDBTest.create(new User("tata", "password"));
         
         User admin = new User("admin", "admin");
         admin.setSeclevel(100);
-        userDBTest.creat(admin);
+        userDBTest.create(admin);
         
         return userDBTest;
     }
