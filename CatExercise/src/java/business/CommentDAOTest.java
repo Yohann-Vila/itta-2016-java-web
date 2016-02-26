@@ -58,7 +58,8 @@ public class CommentDAOTest implements ICommentDAO {
         return comments.add(comment);
     }
 
-    private Comment findByID(int id) {
+    @Override
+    public Comment findByID(int id) {
         for (Comment comment : comments) {
             if (comment.getCommentID() == id) {
                 return comment;
