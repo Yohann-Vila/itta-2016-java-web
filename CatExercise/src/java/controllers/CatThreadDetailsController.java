@@ -36,11 +36,15 @@ public class CatThreadDetailsController extends HttpServlet {
         commentDAO = DAOFactory.getInstanceOfComment();
     }
 
-    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-      
+      //basicTests(resp);
+       
+    }
+
+    /* private methods */
+    private void basicTests(HttpServletResponse resp) {
         PrintWriter out = resp.getWriter();
         
         out.println("ok");
@@ -53,10 +57,8 @@ public class CatThreadDetailsController extends HttpServlet {
         out.println("---------------------------------------------");
         markCommentDeleted(newcommentid);
         basicDetailsPrintThread(id, out);        
-        out.println("---------------------------------------------");        
+        out.println("---------------------------------------------");         
     }
-
-    /* private methods */
     
     private void basicDetailsPrintThread(int id, PrintWriter out) {
         CatThread thread = getThreadByID(id, true);
