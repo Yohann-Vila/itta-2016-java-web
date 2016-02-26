@@ -29,26 +29,28 @@
 <%-- Commentaires --%>
 <div class="row">
     <div>
-        <div><p>Commentaires :</p></div><br>
-        <div>
-            <c:forEach items="${currentCatThread.comments}" var="comment" varStatus="s" step="1">
-                <p> Le ${comment.creationDate}, ${comment.login} a écrit : </p>
-                <p>${comment.content}</p>
-            </c:forEach>
-        </div>
+        <p>Commentaires :</p><br>
     </div> 
-</div>
+</div>        
+
+<c:forEach items="${currentCatThread.comments}" var="comment" varStatus="s" step="1">
+    <div class="row">        
+        <div class="col-md-4">${comment.login} <br><small>Le ${comment.creationDate}</small></div>
+        <div class="col-md-8">${comment.content}</div>          
+    </div>
+    <div><br></div>
+</c:forEach>
+
 
 <%-- Nouveau commentaires --%>
 <div class="row">
     <div>
+        <c:if test="${user == null}" var="nouser" />
         <br>
-        <p>
-            Composer un nouveau commentaire :
-        </p>
+        <p><c:if test="${! nouser}"> Composez un nouveau commentaire : </c:if> <c:if test="${nouser}"> Veuillez vous <a href="">connecter</a> avec votre compte pour poster un commentaire </c:if></p>
         <form>
-            <textarea class="form-control" name="newcomment" cols="60" rows="5" id="commentfield" ></textarea>
-            <button type="button" class="btn btn-primary">Envoyer</button>
+            <textarea class="form-control" name="newcomment" cols="60" rows="5" id="commentfield" <c:if test="${nouser}">disabled</c:if>></textarea>
+            <button type="button" class="btn btn-primary" <c:if test="${nouser}">disabled</c:if>>Envoyer</button>
         </form>
     </div>
 </div>
