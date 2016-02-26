@@ -3,6 +3,7 @@ package business;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -10,6 +11,7 @@ import java.util.LinkedHashSet;
  */
 public class CommentDAOTest implements ICommentDAO {
 
+    static AtomicInteger count = new AtomicInteger(0); // for id autogeneration
     static Collection<Comment> comments = new LinkedHashSet<>();
     
     @Override
@@ -34,6 +36,7 @@ public class CommentDAOTest implements ICommentDAO {
         if (comment == null) {
             return false;
         }
+        comment.setCommentId(count.incrementAndGet());
         
         return comments.add(comment);
     }

@@ -5,7 +5,9 @@ import java.util.Date;
 public class Comment {
     static int count = 0; // for unique ids
     
-    private final int commentId;
+    private int commentId;
+
+
     private final int threadId;
     private String login;
     private final Date creationDate;
@@ -13,11 +15,14 @@ public class Comment {
     private String content;
     
     public Comment(int threadId, String login, String content) {
-        this.commentId = ++count;
         this.threadId = threadId;
         this.login = login;
         this.content = content;
         this.creationDate = new Date();
+    }
+    
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
     }
     
     public int getCommentID() {
