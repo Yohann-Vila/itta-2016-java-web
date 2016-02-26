@@ -35,13 +35,15 @@ public class SecurityController extends HttpServlet {
             req.getSession().setAttribute("user", u);
             if (redirect.trim().isEmpty()) {
                 resp.sendRedirect(req.getContextPath() + "/find.jsp?login=1");
+                return;
             } else {
                 resp.sendRedirect(req.getContextPath() + redirect + "?login=1");
+                return;
             }
-            resp.getWriter().println("Vous êtes authentifié avec " + u.getLogin());
+
         } else {
-            
             resp.sendRedirect(req.getContextPath() + "/login.jsp?error=1");
+            return;
         }
     }
 

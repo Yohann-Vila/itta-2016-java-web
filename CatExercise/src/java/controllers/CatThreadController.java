@@ -13,7 +13,7 @@ public class CatThreadController extends HttpServlet {
 
     private ICatThreadDAO catThreadDAO;
     private IUserDAO userDAO;
-    private boolean filterDeletedThread;
+    private boolean hideDeletedThread;
 
     /*Overide*/
     @Override
@@ -21,18 +21,32 @@ public class CatThreadController extends HttpServlet {
         super.init(); //To change body of generated methods, choose Tools | Templates.
         catThreadDAO = DAOFactory.getInstanceOfCatThread();
         userDAO = DAOFactory.getInstanceOfUser();
-        filterDeletedThread = true;
+        hideDeletedThread = true;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String what = req.getParameter("what");
-        
+        String what = req.getParameter("what") ==null || req.getParameter("what").isEmpty() ? "*" : req.getParameter("what");
+        boolean addthread =  req.getParameter("addthread") ==null || req.getParameter("addthread").isEmpty() ? false : true;
+        if (addthread) {
+            Object o = req.getSession().getAttribute("user");
+            if (o != null && o instanceof User) {
+                String urlphoto = req.getParameter("title");
+                String title = req.getParameter("urlphoto");
+                CatThread ct = createThread(urlphoto, title, (User)o);
+                
+                resp.sendRedirect(req.getContextPath() + "/threaddetails?idthread="+ct.getCatThreadId());
+                return;
+            }else{
+                resp.sendRedirect(req.getContextPath() + "/login.jsp?redirect=/add-thread.jsp");
+                return;
+            }
+        }
         int nbByPage = initOrDefaultNbByPage(req);
         int currentPage = initOrDefaultCurrentPage(req);
-        
-        Collection<CatThread> filteredResult = (Collection<CatThread>)req.getSession().getAttribute("filteredResult");
-        
+
+        Collection<CatThread> filteredResult = (Collection<CatThread>) req.getSession().getAttribute("filteredResult");
+
         if (req.getSession().getAttribute("what") == null || !req.getSession().getAttribute("what").equals(what) || filteredResult == null) {
             filteredResult = finCatThread(what);
             req.getSession().setAttribute("what", what);
@@ -47,25 +61,28 @@ public class CatThreadController extends HttpServlet {
         rd.forward(req, resp);
 
     }
-     /*Method Private*/
+
+    /*Method Private*/
     private int initOrDefaultNbByPage(HttpServletRequest req) {
         int nb = 10;
         try {
-            nb =Integer.parseInt(req.getParameter("nbByPage"));
+            nb = Integer.parseInt(req.getParameter("nbByPage"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return nb;
     }
+
     private int initOrDefaultCurrentPage(HttpServletRequest req) {
         int nb = 1;
         try {
-            nb =Integer.parseInt(req.getParameter("page"));
+            nb = Integer.parseInt(req.getParameter("page"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return nb;
     }
+
     private TreeSet<Integer> getPageList(Collection<CatThread> result, int rsByPage) {
         TreeSet<Integer> pageList = new TreeSet<>();
         for (int i = 1; i <= (result.size() / rsByPage) + 1; i++) {
@@ -73,6 +90,7 @@ public class CatThreadController extends HttpServlet {
         }
         return pageList;
     }
+
     private CatThread createThread(String title, String uriPhoto, User user) {
         CatThread c = new CatThread(user.getLogin(), title, uriPhoto);
         boolean b = false;
@@ -83,6 +101,7 @@ public class CatThreadController extends HttpServlet {
         }
         return b ? c : null;
     }
+
     private LinkedHashSet<CatThread> getThreadByPages(Collection<CatThread> result, int rsByPage, int currentPage) {
         LinkedHashSet<CatThread> outSet = new LinkedHashSet<>();
         int maxValue = currentPage * rsByPage;
@@ -100,22 +119,24 @@ public class CatThreadController extends HttpServlet {
         }
         return outSet;
     }
+
     private Collection<CatThread> finCatThread(String what) {
         if (what == null || what.equals("*") || what.isEmpty()) {
-            return catThreadDAO.getAll(filterDeletedThread);
+            return catThreadDAO.getAll(hideDeletedThread);
         } else {
             Collection<CatThread> c = new LinkedHashSet<>();
-            c.addAll(catThreadDAO.findByTitle(what, filterDeletedThread));
+            c.addAll(catThreadDAO.findByTitle(what, hideDeletedThread));
             User find = userDAO.find(what);
             if (find != null) {
                 String login = find.getLogin();
                 if (login != null) {
-                    c.addAll(catThreadDAO.findByLogin(login, filterDeletedThread));
+                    c.addAll(catThreadDAO.findByLogin(login, hideDeletedThread));
                 }
             }
             return c;
         }
     }
+
     private boolean removeThread(CatThread c) {
         c.deleteThread();
         boolean status = false;
