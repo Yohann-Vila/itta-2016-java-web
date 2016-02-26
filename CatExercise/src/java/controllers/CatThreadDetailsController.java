@@ -44,7 +44,7 @@ public class CatThreadDetailsController extends HttpServlet {
     }
 
     /* private methods */
-    private void basicTests(HttpServletResponse resp) {
+    private void basicTests(HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
         
         out.println("ok");
