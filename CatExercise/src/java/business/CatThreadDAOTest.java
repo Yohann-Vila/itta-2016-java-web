@@ -33,9 +33,10 @@ public class CatThreadDAOTest implements ICatThreadDAO {
 
     @Override
     public Collection<CatThread> findByTitle(String partialTitle) {
+        String partialTitleLowered = partialTitle.toLowerCase();
         Set<CatThread> results = new LinkedHashSet<>();
         for (CatThread thread : catThreads) {
-            if (thread.getLogin().contains(partialTitle)) {
+            if (thread.getTitre().toLowerCase().contains(partialTitleLowered)) {
                 results.add(thread);
             }
         }
@@ -65,7 +66,13 @@ public class CatThreadDAOTest implements ICatThreadDAO {
         }
         return(catThreads.add(catThread));
     }
-
+    @Override
+    public boolean delete(CatThread catThread) {
+        if (catThread == null) {
+            return false;
+        }
+        return(catThreads.remove(catThread));
+    }
     @Override
     public CatThread findByID(int id) {
         for (CatThread catThread : catThreads) {
