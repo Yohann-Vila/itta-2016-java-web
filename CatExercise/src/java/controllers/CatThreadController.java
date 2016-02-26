@@ -1,8 +1,6 @@
 package controllers;
 
-import dao.DAOFactory;
-import dao.ICatThreadDAO;
-import dao.IUserDAO;
+import dao.*;
 import business.*;
 import java.io.*;
 import java.util.*;
@@ -49,33 +47,6 @@ public class CatThreadController extends HttpServlet {
         RequestDispatcher rd = req.getRequestDispatcher("/thread-list.jsp");
         rd.forward(req, resp);
 
-        //resp.sendRedirect(req.getContextPath() + "/thread-list.jsp?currentPage="+currentPage+"&what="+what);
-//        PrintWriter out = resp.getWriter();
-//        out.println("OK");
-//
-//        String what = req.getParameter("what");
-//        System.out.println(what);
-//        filteredResult = finCatThread(what);
-//        out.println(filteredResult.size());
-//        CatThread c = createThread("TEST_CREATE", "test", userDAO.find("toto"));
-//        int currentPage = 1;
-//        try {
-//            currentPage = Integer.parseInt(req.getParameter("page"));
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        out.println(createThread("Test", "/photo/chat1.png", userDAO.find("toto")));
-//        out.println("Test PAGINATION : " + currentPage);
-//
-//        for (CatThread catThread : getThreadByPages(currentPage)) {
-//            out.println(catThread.getCatThreadId() + " :" + catThread.getTitre());
-//        }
-//        out.println("Fin Test PAGINATION");
-//        out.println(c.getCatThreadId());
-//        removeThread(c);
-//        out.println(filteredResult.size());
-//
-//        out.println("Fin");
     }
 
     private int initOrDefaultNbByPage(HttpServletRequest req) {
