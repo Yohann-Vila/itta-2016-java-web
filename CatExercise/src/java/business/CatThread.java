@@ -48,6 +48,10 @@ public class CatThread {
     public Collection<Comment> getComments() {
         return comments;
     }
+    
+    public void setComments(Collection<Comment> comments) {
+        this.comments = comments;
+    }
 
     public CatThread(String login, String titre, String uriPhoto) {
         this.login = login;
