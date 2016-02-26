@@ -11,3 +11,8 @@
     </head>
     <body>
         <div  class="container">
+            <c:if test="${param.login=='1'}">
+                <div class="alert alert-success">
+                    <span >Authentification réussie !</span>
+                </div>
+            </c:if>
