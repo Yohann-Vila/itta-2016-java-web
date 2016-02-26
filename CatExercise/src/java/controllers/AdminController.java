@@ -80,7 +80,7 @@ public class AdminController extends HttpServlet {
         newuser.setCreationdate(new Date());
 
         try {
-            if (userDAO.creat(newuser)) {
+            if (userDAO.create(newuser)) {
                 User chercheuser = userDAO.find(newuser.getLogin());
                 out.println("L'utilisateur " + chercheuser.getLogin() + " - " + chercheuser.getPassword() + " - " + chercheuser.getPseudo() + " - "
                         + chercheuser.getCreationdate().toString() + " - " + chercheuser.getSeclevel() + " - " + chercheuser.getIsban());
@@ -103,7 +103,7 @@ public class AdminController extends HttpServlet {
 
                 banuser = userDAO.find(login);
                 banuser.setIsban(true);
-                userDAO.modify(banuser);
+                userDAO.update(banuser);
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
