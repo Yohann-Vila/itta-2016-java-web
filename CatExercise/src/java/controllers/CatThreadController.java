@@ -34,6 +34,8 @@ public class CatThreadController extends HttpServlet {
         String what = req.getParameter("what");
         System.out.println(what);
         filteredResult = finCatThread(what);
+        
+        createThread("TEST_CREATE", "test", userDAO.find("toto"));
         int currentPage = 1;
         try {
             currentPage = Integer.parseInt(req.getParameter("page"));
@@ -44,9 +46,12 @@ public class CatThreadController extends HttpServlet {
         out.println("Test PAGINATION : " + currentPage);
 
         for (CatThread catThread : getThreadByPages(currentPage)) {
-            out.println(catThread.getTitre());
+            out.println(catThread.getCatThreadId()+ " :" +catThread.getTitre());
+            removeThread(catThread);
+            
         }
-        out.print("Fin Test PAGINATION");
+        out.println("Fin Test PAGINATION");
+        
         out.println("Fin");
     }
 
@@ -102,12 +107,14 @@ public class CatThreadController extends HttpServlet {
         this.nbByPage = nbByPage;
     }
     private boolean removeThread(CatThread c) {
+        c.deleteThread();
         boolean status = false;
         try {
-            status = catThreadDAO.delete(c);
+            status = catThreadDAO.modify(c);
         }catch(Exception e){
             System.out.println(e.getMessage()); 
         }
         return status;
     }
+   
 }
