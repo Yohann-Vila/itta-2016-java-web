@@ -13,7 +13,5 @@ public interface ICatThreadDAO {
     
     boolean modify(CatThread catThread);
     boolean create(CatThread catThread);
-    boolean delete(CatThread catThread);
-
     CatThread findByID(int id);
 }
