@@ -37,6 +37,11 @@ public class UserDAOTest implements IUserDAO {
             return false;
         }
         
+        // check if user with same id doesn't already exists
+        if (find(user.getLogin()) != null) {
+            return false;
+        }
+        
         return users.add(user);
     }
 
