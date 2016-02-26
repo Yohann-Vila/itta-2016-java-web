@@ -59,7 +59,15 @@ public class CatThreadDetailsController extends HttpServlet {
     
     private boolean addComment(int threadID, String user, String content) {
         Comment comment = new Comment(threadID, user, content);
-        return commentDAO.create(comment);
+        boolean result = false;
+        try {
+            result = commentDAO.create(comment);
+        }
+        catch(Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        return result;
     }
     
     private void markCommentDeleted(Comment comment) {
@@ -67,7 +75,12 @@ public class CatThreadDetailsController extends HttpServlet {
     }
     
     private void loadThreadComments(CatThread thread, boolean actif) {
-        thread.setComments(commentDAO.getPostsFromThread(thread.getCatThreadId(), actif));
+        try {
+            thread.setComments(commentDAO.getPostsFromThread(thread.getCatThreadId(), actif));
+        }
+        catch(Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 }
