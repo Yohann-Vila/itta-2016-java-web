@@ -29,15 +29,15 @@ public class AdminController extends HttpServlet {
         out.println("Début Usercontroller");
         Collection<User> xx = getAll(0);
         for (User utilisateur : xx) {
-            out.println("user : \t" + utilisateur.getLogin() + " - \t" + utilisateur.getIsban() + " - \t" + utilisateur.getSeclevel());
+            out.println("user : \t" + utilisateur.getLogin() + " - \t" + utilisateur.getBanish() + " - \t" + utilisateur.getSeclevel());
         }
 
-        out.println("banish user : titi ");
+        out.println("banishe user : titi ");
 
-        if (banUser("titi", User.ADMINISTRATEUR) != null) {
+        if (banishUser("titi", User.ADMINISTRATEUR) != null) {
             out.println("nouveau status utilisateur : \n");
             User user_titi = userDAO.find("titi");
-            out.println(user_titi.getLogin() + " - " + user_titi.getIsban());
+            out.println(user_titi.getLogin() + " - " + user_titi.getBanish());
         } else {
             out.println("utilisateur non trouvé");
         }
@@ -70,7 +70,7 @@ public class AdminController extends HttpServlet {
         User newuser = new User(login,password);
         boolean retour = false;
 
-        newuser.setIsban(false);
+        newuser.setBanish(false);
         newuser.setSeclevel(User.UTILISATEUR);
         if (pseudo != null) {
             newuser.setPseudo(pseudo);
@@ -80,10 +80,10 @@ public class AdminController extends HttpServlet {
         newuser.setCreationdate(new Date());
 
         try {
-            if (userDAO.creat(newuser)) {
+            if (userDAO.create(newuser)) {
                 User chercheuser = userDAO.find(newuser.getLogin());
                 out.println("L'utilisateur " + chercheuser.getLogin() + " - " + chercheuser.getPassword() + " - " + chercheuser.getPseudo() + " - "
-                        + chercheuser.getCreationdate().toString() + " - " + chercheuser.getSeclevel() + " - " + chercheuser.getIsban());
+                        + chercheuser.getCreationdate().toString() + " - " + chercheuser.getSeclevel() + " - " + chercheuser.getBanish());
                 retour = true;
             } else {
                 out.println(" Utilisateur existe déjà ");
@@ -95,15 +95,15 @@ public class AdminController extends HttpServlet {
         return retour;
     }
 
-    User banUser(String login, int seclevel) {
+    User banishUser(String login, int seclevel) {
         User banuser = null;
         if (seclevel == User.ADMINISTRATEUR)// mettre une  => enum user.security.CONSTANTE
         {
             try {
 
                 banuser = userDAO.find(login);
-                banuser.setIsban(true);
-                userDAO.modify(banuser);
+                banuser.setBanish(true);
+                userDAO.update(banuser);
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
