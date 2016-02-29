@@ -75,7 +75,7 @@ public class CatThreadDetailsController extends HttpServlet {
         int threadId = -1;
         User user;  
         Object userObj;
-        String username;
+        String username = null;
         String commentContent = null;
         
         // check if parameters are there
@@ -84,20 +84,20 @@ public class CatThreadDetailsController extends HttpServlet {
         try {
             threadId = Integer.parseInt(req.getParameter("idthread"));            
         } catch(NumberFormatException ex) {
-            invalidPost();
+            invalidPost(threadId, username, commentContent);
         }
         
         // 2 - user
         userObj = req.getSession().getAttribute("user");
         if (userObj == null) {
-            invalidPost();
+            invalidPost(threadId, username, commentContent);
             return;
         }
 
         try {
             user = (User) userObj;
         } catch (ClassCastException ex) {
-            invalidPost();
+            invalidPost(threadId, username, commentContent);
             return;
         }
 
@@ -106,7 +106,7 @@ public class CatThreadDetailsController extends HttpServlet {
         // 3 - comment
         commentContent = (String) req.getAttribute("commentcontent");
         if (commentContent == null) {
-            invalidPost();
+            invalidPost(threadId, username, commentContent);
             return;
         }
         
