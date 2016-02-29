@@ -5,8 +5,7 @@
  */
 package controllers;
 
-import business.CatThread;
-import business.Comment;
+import business.*;
 import dao.DAOFactory;
 import dao.ICatThreadDAO;
 import dao.ICommentDAO;
@@ -71,6 +70,64 @@ public class CatThreadDetailsController extends HttpServlet {
         
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int threadId = -1;
+        User user;  
+        Object userObj;
+        String username = null;
+        String commentContent = null;
+        
+        // check if parameters are there
+        
+        // 1 - threadid
+        try {
+            threadId = Integer.parseInt(req.getParameter("idthread"));            
+        } catch(NumberFormatException ex) {
+            invalidPost(threadId, username, commentContent);
+        }
+      
+        // 2 - user
+        userObj = req.getSession().getAttribute("user");
+        if (userObj == null) {
+            invalidPost(threadId, username, commentContent);
+            return;
+        }
+        
+        try {
+            user = (User) userObj;
+        } catch (ClassCastException ex) {
+            invalidPost(threadId, username, commentContent);
+            return;
+        }
+        
+        username = user.getLogin();
+        
+        // 3 - comment
+        
+           
+        commentContent = (String) req.getAttribute("commentcontent");
+        if (commentContent == null) {
+            invalidPost(threadId, username, commentContent);
+            return;
+        }
+        
+        // add the comment
+        addComment(threadId, username, commentContent);
+        // load the thread detail page 
+        doGet(req, resp);
+    }
+    
+    private void invalidPost(int threadId, String username, String commentContent) throws ServletException{
+        StringBuilder message = new StringBuilder();
+        message.append("Invalid comment post attempt.");
+        message.append("\nthreadid : ").append(threadId);
+        message.append("\nusername : ").append(username);
+        message.append("\ncommentContent : ").append(commentContent);
+        
+        throw new ServletException(message.toString());        
+    }
+
     /* private methods */
     private void basicTests(HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
@@ -87,8 +144,6 @@ public class CatThreadDetailsController extends HttpServlet {
         basicDetailsPrintThread(id, out);        
         out.println("---------------------------------------------");        
     }
-
-    /* private methods */
     
     private void basicDetailsPrintThread(int id, PrintWriter out) {
         CatThread thread = getThreadByID(id, true);
