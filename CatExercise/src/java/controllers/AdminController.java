@@ -39,7 +39,8 @@ public class AdminController extends HttpServlet {
                     reqdsp.forward(req, resp);
                     return;
                 case "createflush":
-                    if (!AdminAddUser(req, resp)) {
+                    if (!AdminAddUser(req, resp)) 
+                    {
                         reqdsp = req.getRequestDispatcher("/admin/admininput.jsp?error=1");
                         reqdsp.forward(req, resp);
                         return;
@@ -57,17 +58,18 @@ public class AdminController extends HttpServlet {
     }
 
     private void DisplayUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        String select_user = req.getParameter("login");
+        String login = req.getParameter("login");
 
-        if (select_user != null) {
-            if (select_user.isEmpty() == false) {
-                User userBasish = userDAO.find(select_user);
-                banishUser(select_user, User.ADMINISTRATEUR, userBasish.getBanish() == true ? false : true);
+        if (login != null) {
+            if (login.isEmpty() == false) {
+                User userBasish = userDAO.find(login);
+                banishUser(login, User.ADMINISTRATEUR, userBasish.getBanish() == true ? false : true);
             }
         }
         req.getSession().setAttribute("Listusers", getAll());
         RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/adminpage.jsp");
         reqdsp.forward(req, resp);
+        return;
     }
 
     private boolean AdminAddUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -91,7 +93,7 @@ public class AdminController extends HttpServlet {
 
         User newuser = new User(login, password);
         boolean retour = false;
-
+        System.out.println("  AdcreateUser  "+login+" " + password+" "+ pseudo+ " "+ niveau);
         newuser.setBanish(false);
         newuser.setSeclevel(User.UTILISATEUR);
         if (pseudo != null) {
