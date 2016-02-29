@@ -33,6 +33,7 @@ public class adminFilter implements Filter {
         }
         if (!allowRequest) {
             resp.sendRedirect(req.getContextPath() + "/login.jsp?redirect=/admincontroller");
+            return;
         }
         chain.doFilter(req, resp);
     }

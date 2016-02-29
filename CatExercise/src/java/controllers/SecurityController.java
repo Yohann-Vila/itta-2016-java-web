@@ -100,7 +100,7 @@ public class SecurityController extends HttpServlet {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && user.getPassword().equals(password) && !user.getBanish() ) {
             return user;
         } else {
             return null;
