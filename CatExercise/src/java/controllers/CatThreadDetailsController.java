@@ -12,6 +12,7 @@ import dao.ICommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.Enumeration;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -104,9 +105,7 @@ public class CatThreadDetailsController extends HttpServlet {
         username = user.getLogin();
         
         // 3 - comment
-        
-           
-        commentContent = (String) req.getAttribute("commentcontent");
+        commentContent = (String) req.getParameter("commentcontent");
         if (commentContent == null) {
             invalidPost(threadId, username, commentContent);
             return;
@@ -123,7 +122,7 @@ public class CatThreadDetailsController extends HttpServlet {
         message.append("Invalid comment post attempt.");
         message.append("\nthreadid : ").append(threadId);
         message.append("\nusername : ").append(username);
-        message.append("\ncommentContent : ").append(commentContent);
+        message.append("\ncommentcontent : ").append(commentContent);
         
         throw new ServletException(message.toString());        
     }
