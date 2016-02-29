@@ -116,8 +116,14 @@ public class CatThreadDetailsController extends HttpServlet {
         doGet(req, resp);
     }
     
-    private void invalidPost() throws ServletException{
-        throw new ServletException("Invalid comment post attempt.");        
+    private void invalidPost(int threadId, String username, String commentContent) throws ServletException{
+        StringBuilder message = new StringBuilder();
+        message.append("Invalid comment post attempt.\n");
+        message.append("threadid : ").append(threadId);
+        message.append("username : ").append(username);
+        message.append("commentContent : ").append(commentContent);
+        
+        throw new ServletException(message.toString());        
     }
 
     /* private methods */
