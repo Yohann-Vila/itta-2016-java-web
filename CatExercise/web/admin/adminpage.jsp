@@ -16,7 +16,7 @@
     <c:forEach items="${Listusers}" var="user" >    
         <tr>
             <td>${user.login}     </td>
-            <td>${user.pseudo}  ${user.banish}  </td>
+            <td>${user.pseudo}  </td>
             <td>${user.creationdate} </td>
             <c:url var="url" value="/admincontroller">
                 <c:param name="login" value="${user.login}"/>
