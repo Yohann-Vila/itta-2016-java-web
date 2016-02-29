@@ -23,11 +23,11 @@ public class Comment {
         this.commentId = commentId;
     }
     
-    public int getCommentID() {
+    public int getCommentId() {
         return commentId;
     }
 
-    public int getThreadID() {
+    public int getThreadId() {
         return threadId;
     }
 

@@ -20,7 +20,7 @@ public class CommentDAOTest implements ICommentDAO {
         Collection<Comment> results = new LinkedHashSet<>();
         
         for (Comment comment : comments) {
-            if(comment.getThreadID() == idThread) {
+            if(comment.getThreadId() == idThread) {
                 // if "actif" switch is false, get all comments, 
                 // if "actif" switch is true, only get comments that are not deleted
                 if(!(actif && comment.isDeleted())) {
@@ -48,7 +48,7 @@ public class CommentDAOTest implements ICommentDAO {
             return false;
         }
         
-        int id = comment.getCommentID();
+        int id = comment.getCommentId();
         Comment oldComment = findByID(id);
         
         if (oldComment == null) {
@@ -62,7 +62,7 @@ public class CommentDAOTest implements ICommentDAO {
     @Override
     public Comment findByID(int id) {
         for (Comment comment : comments) {
-            if (comment.getCommentID() == id) {
+            if (comment.getCommentId() == id) {
                 return comment;
             }
         }

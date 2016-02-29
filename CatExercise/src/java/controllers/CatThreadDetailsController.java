@@ -66,6 +66,27 @@ public class CatThreadDetailsController extends HttpServlet {
         
         req.getSession().setAttribute("currentCatThread", currentCatThread);
         
+        // if commentId parameter is there, it's for admin and ability to mark / unmark comments
+        int commentid;
+        try {
+            commentid = Integer.parseInt(req.getParameter("commentid"));
+        } catch (NumberFormatException | NullPointerException ex ){
+            commentid = -1;
+        }
+        
+        Comment comment = commentDAO.findByID(commentid);
+        User user = (User) req.getSession().getAttribute("user");
+        if (comment != null && user != null) {
+            //check admin
+            if (user.isAdmin()) {
+                //change state of comment
+                comment.setDeleted(! comment.isDeleted());
+            }
+
+            
+        }
+        
+        
         RequestDispatcher rd = req.getRequestDispatcher("/threaddetail.jsp");
         rd.forward(req, resp);
         
@@ -160,7 +181,7 @@ public class CatThreadDetailsController extends HttpServlet {
         Collection<Comment> comments = thread.getComments();
         for (Comment comment : comments) {
             out.println("---");            
-            out.println(" N°" + comment.getCommentID() + " crée par " + comment.getLogin());
+            out.println(" N°" + comment.getCommentId() + " crée par " + comment.getLogin());
             out.println(" crée le " + comment.getCreationDate() );
             out.println(comment.getContent());
         }        
@@ -189,7 +210,7 @@ public class CatThreadDetailsController extends HttpServlet {
         }
         
         if(created) {
-            return comment.getCommentID();
+            return comment.getCommentId();
         } else {
             return -1;
         }
