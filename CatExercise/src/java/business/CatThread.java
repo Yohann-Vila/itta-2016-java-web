@@ -59,8 +59,8 @@ public class CatThread {
         this.uriPhoto = uriPhoto;
     }
 
-    public void deleteThread() {
-        this.deleted = true;
+    public void changeDeletedState() {
+        this.deleted = this.deleted ? false : true;
     }
 
     @Override

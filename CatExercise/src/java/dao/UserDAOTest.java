@@ -3,7 +3,10 @@ package dao;
 import business.User;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.TreeSet;
 
 /**
  *
@@ -11,7 +14,7 @@ import java.util.HashSet;
  */
 public class UserDAOTest implements IUserDAO {
 
-    static Collection<User> users = new ArrayList<>();
+    static ArrayList<User> users = new ArrayList<>();
     
     public UserDAOTest() {
         
@@ -19,7 +22,7 @@ public class UserDAOTest implements IUserDAO {
     
     @Override
     public Collection<User> getAll() {
-        return users;
+        return Collections.unmodifiableCollection(users);
     }
 
     @Override
@@ -51,16 +54,14 @@ public class UserDAOTest implements IUserDAO {
         if (user == null) {
             return false;
         }
-        String login = user.getLogin();
-        User oldUser = find(login);
-        
-        if (oldUser == null) {
+        int index = users.indexOf(user);
+
+        if (index == -1) {
             return false;
         }
         
-        users.remove(oldUser);
-        return users.add(user);
-        
+        users.set(index, user);
+        return true;
     }
     
 }

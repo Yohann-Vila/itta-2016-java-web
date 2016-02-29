@@ -27,21 +27,18 @@ public class CatThreadController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String what = req.getParameter("what") ==null || req.getParameter("what").isEmpty() ? "*" : req.getParameter("what");
-        boolean addthread =  req.getParameter("addthread") ==null || req.getParameter("addthread").isEmpty() ? false : true;
-        if (addthread) {
-            Object o = req.getSession().getAttribute("user");
-            if (o != null && o instanceof User) {
-                String urlphoto = req.getParameter("title");
-                String title = req.getParameter("urlphoto");
-                CatThread ct = createThread(urlphoto, title, (User)o);
-                
-                resp.sendRedirect(req.getContextPath() + "/threaddetails?idthread="+ct.getCatThreadId());
-                return;
-            }else{
-                resp.sendRedirect(req.getContextPath() + "/login.jsp?redirect=/add-thread.jsp");
-                return;
-            }
+        if(req.getSession().getAttribute("user") !=null && ((User)req.getSession().getAttribute("user")).isAdmin()){
+            hideDeletedThread = false;
         }
+        int del = req.getParameter("del") ==null || req.getParameter("del").isEmpty() ? -1 : Integer.parseInt(req.getParameter("del"));
+        int undel = req.getParameter("undel") ==null || req.getParameter("undel").isEmpty() ? -1 : Integer.parseInt(req.getParameter("undel"));
+        needToDeleteOrHide(undel,req);
+        needToDeleteOrHide(del,req);
+
+
+        if (isNeedToAddThread(req, resp)) return;
+
+        
         int nbByPage = initOrDefaultNbByPage(req);
         int currentPage = initOrDefaultCurrentPage(req);
 
@@ -60,6 +57,33 @@ public class CatThreadController extends HttpServlet {
         RequestDispatcher rd = req.getRequestDispatcher("/thread-list.jsp");
         rd.forward(req, resp);
 
+    }
+
+    private boolean isNeedToAddThread(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        boolean addthread =  req.getParameter("addthread") ==null || req.getParameter("addthread").isEmpty() ? false : true;
+        if (addthread) {
+            Object o = req.getSession().getAttribute("user");
+            if (o != null && o instanceof User) {
+                String urlphoto = req.getParameter("title");
+                String title = req.getParameter("urlphoto");
+                CatThread ct = createThread(urlphoto, title, (User)o);
+                resp.sendRedirect(req.getContextPath() + "/threaddetails?idthread="+ct.getCatThreadId());
+                return true;
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/login.jsp?redirect=/add-thread.jsp");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void needToDeleteOrHide(int param,HttpServletRequest req) throws NumberFormatException {
+        if(param > 0 && req.getSession().getAttribute("user") !=null && ((User)req.getSession().getAttribute("user")).isAdmin()){
+            CatThread t = catThreadDAO.findByID(param);
+            t.changeDeletedState();
+            boolean update = catThreadDAO.update(t);
+            req.getSession().setAttribute("filteredResult",null);
+        }
     }
 
     /*Method Private*/
@@ -137,14 +161,4 @@ public class CatThreadController extends HttpServlet {
         }
     }
 
-    private boolean removeThread(CatThread c) {
-        c.deleteThread();
-        boolean status = false;
-        try {
-            status = catThreadDAO.update(c);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return status;
-    }
 }
