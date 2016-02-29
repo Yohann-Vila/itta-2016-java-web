@@ -28,5 +28,10 @@
 </table>
 
 <br>
-<button>Ajouter un utilisateur</button>
+
+            <c:url var="url" value="/admincontroller">
+                <c:param name="creation" value="create"/>
+            </c:url>
+            <a href="${url}" type="button" class="btn btn-primary">Ajouter un utilisateur</a>
+
 <%@include file="/include/footer.jspf" %>
