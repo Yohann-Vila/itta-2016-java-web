@@ -22,28 +22,18 @@ public class AdminController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
+        super.init(); 
         userDAO = DAOFactory.getInstanceOfUser();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        PrintWriter out = resp.getWriter();
-//        Collection<User> Listuser = (Collection<User>)req.getSession().getAttribute("Listuser");
-//        Collection<User> xx = getAll();
-//        for (User utilisateur : xx) {
-//             out.println("user : \t" + utilisateur.getLogin() + " - \t" + utilisateur.getBanish() + " - \t" + utilisateur.getSeclevel());
-//        }
-//
-//         out.println("banishe user : titi ");
-//
-//        if (banishUser("titi", User.ADMINISTRATEUR) != null) {
-//            User user_titi = userDAO.find("titi");
-//           // out.println(user_titi.getLogin() + " - " + user_titi.getBanish());
-//        } else {
-//           // out.println("utilisateur non trouvé");
-//        }
-//       
+      
+        DisplayUser(req, resp);
+        
+    }
+
+    private void DisplayUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String select_user = req.getParameter("login");
         
         if(select_user != null)
@@ -56,10 +46,11 @@ public class AdminController extends HttpServlet {
         }
     
         req.getSession().setAttribute("Listusers", getAll());
-       
+        
+        
+        
         RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/adminpage.jsp");
-        reqdsp.forward(req, resp); 
- 
+        reqdsp.forward(req, resp);
     }
 
     private Collection<User> getAll() {
@@ -91,14 +82,12 @@ public class AdminController extends HttpServlet {
         try {
             if (userDAO.insert(newuser)) {
                 User chercheuser = userDAO.find(newuser.getLogin());
-               // out.println("L'utilisateur " + chercheuser.getLogin() + " - " + chercheuser.getPassword() + " - " + chercheuser.getPseudo() + " - "
-               //         + chercheuser.getCreationdate().toString() + " - " + chercheuser.getSeclevel() + " - " + chercheuser.getBanish());
                 retour = true;
             } else {
                // out.println(" Utilisateur existe déjà ");
             }
         } catch (Exception e) {
-           // out.println(" Error " + e);
+
             System.out.println(e.getMessage());
         }
         return retour;
@@ -106,7 +95,7 @@ public class AdminController extends HttpServlet {
 
     User banishUser(String login, int seclevel,boolean banish) {
         User banuser = null;
-        if (seclevel == User.ADMINISTRATEUR)// mettre une  => enum user.security.CONSTANTE
+        if (seclevel == User.ADMINISTRATEUR)
         {
             try {
 

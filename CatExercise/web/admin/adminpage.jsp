@@ -21,7 +21,7 @@
             <c:url var="url" value="/admincontroller">
                 <c:param name="login" value="${user.login}"/>
             </c:url>
-            <td> <a href="${url}" type="button" class="btn btn-primary">${(user.banish eq flase)?"Actif":"Banish"}</a></td>
+            <td> <a href="${url}" type="button" class="btn btn-primary">${(user.banish eq false)?"Actif":"Banish"}</a></td>
         </tr>
     </c:forEach>
 </table>
