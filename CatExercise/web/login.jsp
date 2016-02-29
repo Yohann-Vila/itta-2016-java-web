@@ -4,7 +4,7 @@
 <c:url value="/login" var="url" />
 <h1>Connectez-vous</h1>
 
-<form action="${url}" method="get">
+<form action="${url}" method="post">
     <c:if test="${param.error=='1'}">
         <div class="alert alert-danger">
         <span >Login ou mot de passe incorrect !</span>

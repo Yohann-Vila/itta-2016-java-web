@@ -24,7 +24,11 @@
                         <c:if test="${sessionScope.user == null}">
                             <li>
                                 <c:url value="/login.jsp" var="url"/>
-                                <a href="${url}">Se connecter <c:out value="${sessionScope.user.login}" /></a>
+                                <a href="${url}">Se connecter</a>
+                                <c:url value="/sign-up.jsp" var="url"/>
+
+                                <a href="${url}">Créer un compte </a>
+
                             </li>
                         </c:if>   
                         <c:if test="${sessionScope.user != null}">
@@ -37,13 +41,12 @@
                             <li><a>Bonjour : <c:out value="${sessionScope.user.login}" /></a></li>
                             
                         </c:if>
-                        
                     </ul>
+                        
                 </div>
             </div>
         </nav>
         <div  class="container">
-
             <c:if test="${param.login=='1'}">
                 <div class="alert alert-success">
                     <span >Authentification réussie !</span>
