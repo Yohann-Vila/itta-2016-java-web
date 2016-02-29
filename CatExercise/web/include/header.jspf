@@ -39,7 +39,9 @@
                                 <li><a href="${url}">Liste utilisateurs</a></li>
                             </c:if>
                             <li><a>Bonjour : <c:out value="${sessionScope.user.login}" /></a></li>
-                            
+                            <c:url value="/login?logout=1" var="url" />
+                            <li><a href="${url}" >Se déconnecter</a></li>
+
                         </c:if>
                     </ul>
                         
