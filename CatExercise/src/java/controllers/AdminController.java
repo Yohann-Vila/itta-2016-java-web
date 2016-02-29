@@ -22,33 +22,43 @@ public class AdminController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init(); 
+        super.init();
         userDAO = DAOFactory.getInstanceOfUser();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      
+
         DisplayUser(req, resp);
-        
+
     }
 
     private void DisplayUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String select_user = req.getParameter("login");
-        
-        if(select_user != null)
-        {
-            if(select_user.isEmpty()==false)
-            {
+        String add_user = req.getParameter("creation");
+
+        if (select_user != null) {
+            if (select_user.isEmpty() == false) {
                 User userBasish = userDAO.find(select_user);
-                banishUser(select_user,User.ADMINISTRATEUR,userBasish.getBanish()==true?false:true);
+                banishUser(select_user, User.ADMINISTRATEUR, userBasish.getBanish() == true ? false : true);
             }
         }
-    
+
+        if (add_user != null) {
+            switch (add_user.toString()) {
+                case "create":
+                    RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/admininput.jsp");
+                    reqdsp.forward(req, resp);
+                    break;
+                case "modification":
+                    break;
+                default:
+                    break;
+            }
+        }
+
         req.getSession().setAttribute("Listusers", getAll());
-        
-        
-        
+
         RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/adminpage.jsp");
         reqdsp.forward(req, resp);
     }
@@ -57,7 +67,7 @@ public class AdminController extends HttpServlet {
         LinkedHashSet<User> cuser = new LinkedHashSet<>();
         try {
             cuser.addAll(userDAO.getAll());
-           // out.println("prise utilisateur");
+            // out.println("prise utilisateur");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -66,8 +76,8 @@ public class AdminController extends HttpServlet {
     }
 
     boolean AdcreateUser(String login, String password, String pseudo) {
-        
-        User newuser = new User(login,password);
+
+        User newuser = new User(login, password);
         boolean retour = false;
 
         newuser.setBanish(false);
@@ -84,7 +94,7 @@ public class AdminController extends HttpServlet {
                 User chercheuser = userDAO.find(newuser.getLogin());
                 retour = true;
             } else {
-               // out.println(" Utilisateur existe déjà ");
+                // out.println(" Utilisateur existe déjà ");
             }
         } catch (Exception e) {
 
@@ -93,10 +103,9 @@ public class AdminController extends HttpServlet {
         return retour;
     }
 
-    User banishUser(String login, int seclevel,boolean banish) {
+    User banishUser(String login, int seclevel, boolean banish) {
         User banuser = null;
-        if (seclevel == User.ADMINISTRATEUR)
-        {
+        if (seclevel == User.ADMINISTRATEUR) {
             try {
 
                 banuser = userDAO.find(login);
