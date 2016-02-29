@@ -63,15 +63,13 @@ public class AdminController extends HttpServlet {
                 banishUser(select_user, User.ADMINISTRATEUR, userBasish.getBanish() == true ? false : true);
             }
         }
-
         req.getSession().setAttribute("Listusers", getAll());
         RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/adminpage.jsp");
         reqdsp.forward(req, resp);
     }
 
     private boolean AdminAddUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        int seclevel = 0;
-        seclevel = parseInt(req.getParameter("seclevel"));
+        int seclevel = parseInt(req.getParameter("seclevel"));
         return AdcreateUser(req.getParameter("login"), req.getParameter("password"), req.getParameter("pseudo"), seclevel);
     }
 
