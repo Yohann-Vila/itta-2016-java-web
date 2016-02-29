@@ -86,24 +86,26 @@ public class CatThreadDetailsController extends HttpServlet {
         } catch(NumberFormatException ex) {
             invalidPost(threadId, username, commentContent);
         }
-        
+      
         // 2 - user
         userObj = req.getSession().getAttribute("user");
         if (userObj == null) {
             invalidPost(threadId, username, commentContent);
             return;
         }
-
+        
         try {
             user = (User) userObj;
         } catch (ClassCastException ex) {
             invalidPost(threadId, username, commentContent);
             return;
         }
-
-        username = user.getPseudo();
+        
+        username = user.getLogin();
         
         // 3 - comment
+        
+           
         commentContent = (String) req.getAttribute("commentcontent");
         if (commentContent == null) {
             invalidPost(threadId, username, commentContent);
@@ -118,10 +120,10 @@ public class CatThreadDetailsController extends HttpServlet {
     
     private void invalidPost(int threadId, String username, String commentContent) throws ServletException{
         StringBuilder message = new StringBuilder();
-        message.append("Invalid comment post attempt.\n");
-        message.append("threadid : ").append(threadId);
-        message.append("username : ").append(username);
-        message.append("commentContent : ").append(commentContent);
+        message.append("Invalid comment post attempt.");
+        message.append("\nthreadid : ").append(threadId);
+        message.append("\nusername : ").append(username);
+        message.append("\ncommentContent : ").append(commentContent);
         
         throw new ServletException(message.toString());        
     }
