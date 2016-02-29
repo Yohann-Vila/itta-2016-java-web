@@ -19,10 +19,6 @@ public class Comment {
         this.creationDate = new Date();
     }
     
-    public void setCommentId(int commentId) {
-        this.commentId = commentId;
-    }
-    
     public int getCommentId() {
         return commentId;
     }
