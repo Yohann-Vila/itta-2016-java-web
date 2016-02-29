@@ -26,25 +26,69 @@ public class SecurityController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        process(req, resp);
+        return;
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        process(req, resp);
+        return;
+    }
+    
+    private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        String repassword = req.getParameter("repassword");
         String redirect = req.getParameter("redirect");
+        String add = req.getParameter("add");
+        
+        if (add != null && !add.isEmpty() && add.equals("1")) {
+            if (cannotAddUser(login, password, repassword, resp, req)){ 
+                return;
+            }
+        }
+        tryToLogTheUser(login, password, req, redirect, resp);
+        return;
+    }
 
+    private void tryToLogTheUser(String login, String password, HttpServletRequest req, String redirect, HttpServletResponse resp) throws IOException {
         User u = getLogin(login.trim(), password.trim());
         if (u != null) {
             req.getSession().setAttribute("user", u);
-            if (redirect.trim().isEmpty()) {
+            if (redirect == null || redirect.trim().isEmpty()) {
                 resp.sendRedirect(req.getContextPath() + "/find.jsp?login=1");
                 return;
             } else {
                 resp.sendRedirect(req.getContextPath() + redirect + "?login=1");
                 return;
             }
-
         } else {
             resp.sendRedirect(req.getContextPath() + "/login.jsp?error=1");
             return;
         }
+    }
+
+    private boolean cannotAddUser(String login, String password, String repassword, HttpServletResponse resp, HttpServletRequest req) throws IOException {
+        if (login != null && !login.isEmpty()
+                && password != null && !password.isEmpty()
+                && repassword != null && !repassword.isEmpty()) {
+            if (password.equals(repassword)) {
+                if (userDAO.find(login) == null) {
+                    userDAO.insert(new User(login, password));
+                } else {
+                    resp.sendRedirect(req.getContextPath() + "/sign-up.jsp?error=exist");
+                    return true;
+                }
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/sign-up.jsp?error=password");
+                return true;
+            }
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/sign-up.jsp?error=field");
+            return true;
+        }
+        return false;
     }
 
     private void test(HttpServletResponse resp) throws IOException {
