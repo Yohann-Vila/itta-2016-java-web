@@ -24,6 +24,9 @@
             <td> <a href="${url}" type="button" class="btn btn-primary">${(user.banish eq false)?"Actif":"Banish"}</a></td>
         </tr>
     </c:forEach>
+
 </table>
 
+<br>
+<button>Ajouter un utilisateur</button>
 <%@include file="/include/footer.jspf" %>
