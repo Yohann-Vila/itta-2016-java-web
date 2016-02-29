@@ -67,17 +67,4 @@ public class User {
     public void setCreationdate(Date creationdate) {
         this.creationdate = creationdate;
     }
-
-    @Override
-    public int hashCode() {
-        return this.login.hashCode(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof User) {
-            return ((User)obj).getLogin()== this.login;
-        }
-        return false;
-    }
 }
