@@ -59,7 +59,7 @@ public class CatThread {
         this.uriPhoto = uriPhoto;
     }
 
-    public void changeDeletedState() {
+    public void toggleDeletedState() {
         this.deleted = this.deleted ? false : true;
     }
 

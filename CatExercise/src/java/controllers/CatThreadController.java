@@ -80,7 +80,7 @@ public class CatThreadController extends HttpServlet {
     private void needToDeleteOrHide(int param,HttpServletRequest req) throws NumberFormatException {
         if(param > 0 && req.getSession().getAttribute("user") !=null && ((User)req.getSession().getAttribute("user")).isAdmin()){
             CatThread t = catThreadDAO.findByID(param);
-            t.changeDeletedState();
+            t.toggleDeletedState();
             boolean update = catThreadDAO.update(t);
             req.getSession().setAttribute("filteredResult",null);
         }
