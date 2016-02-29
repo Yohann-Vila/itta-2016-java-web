@@ -11,19 +11,24 @@
         <c:url value="/threaddetails" var="url">
             <c:param name="idthread" value="${catThread.catThreadId}"></c:param>
         </c:url>
-            <c:if test="${catThread.deleted}"><s></c:if>
-                <li><a href="${url}"><c:out value="${catThread.titre}" /></a>
+        <c:if test="${catThread.deleted}"><s></c:if>
+            <li><a href="${url}"><c:out value="${catThread.titre}" /></a>
             <c:if test="${catThread.deleted}"></s></c:if>
             <c:if test="${sessionScope.user != null}">
-                <c:if test="${sessionScope.user.seclevel != null && !catThread.deleted}">
+                <c:if test="${sessionScope.user.seclevel == 100 && !catThread.deleted}">
                     <c:url value="/thread" var="url" >
                         <c:param name="del" value="${catThread.catThreadId}"></c:param>
                     </c:url>
                 <a href="${url}"><div class="glyphicon glyphicon-remove"></div></a>
                 </c:if>
+                <c:if test="${sessionScope.user.seclevel == 100 && catThread.deleted}">
+                    <c:url value="/thread" var="url" >
+                        <c:param name="undel" value="${catThread.catThreadId}"></c:param>
+                    </c:url>
+                <a href="${url}"><div class="glyphicon glyphicon-ok"></div></a>
+                </c:if>
             </c:if>
     </li>
-
 </c:forEach>
 </ul>   
 <c:forEach items="${pageList}" var="pageNumber">

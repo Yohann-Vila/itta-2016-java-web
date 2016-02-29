@@ -30,8 +30,12 @@ public class CatThreadController extends HttpServlet {
         if(req.getSession().getAttribute("user") !=null && ((User)req.getSession().getAttribute("user")).isAdmin()){
             hideDeletedThread = false;
         }
-        needToDelete(req);
-        
+        int del = req.getParameter("del") ==null || req.getParameter("del").isEmpty() ? -1 : Integer.parseInt(req.getParameter("del"));
+        int undel = req.getParameter("undel") ==null || req.getParameter("undel").isEmpty() ? -1 : Integer.parseInt(req.getParameter("undel"));
+        needToDeleteOrHide(undel,req);
+        needToDeleteOrHide(del,req);
+
+
         if (isNeedToAddThread(req, resp)) return;
 
         
@@ -73,14 +77,12 @@ public class CatThreadController extends HttpServlet {
         return false;
     }
 
-    private void needToDelete(HttpServletRequest req) throws NumberFormatException {
-        int del = req.getParameter("del") ==null || req.getParameter("del").isEmpty() ? -1 : Integer.parseInt(req.getParameter("del"));
-        if(del > 0 && req.getSession().getAttribute("user") !=null && ((User)req.getSession().getAttribute("user")).isAdmin()){
-            CatThread t = catThreadDAO.findByID(del);
-            t.deleteThread();
+    private void needToDeleteOrHide(int param,HttpServletRequest req) throws NumberFormatException {
+        if(param > 0 && req.getSession().getAttribute("user") !=null && ((User)req.getSession().getAttribute("user")).isAdmin()){
+            CatThread t = catThreadDAO.findByID(param);
+            t.changeDeletedState();
             boolean update = catThreadDAO.update(t);
             req.getSession().setAttribute("filteredResult",null);
-            System.out.println("update : " +update);
         }
     }
 
@@ -159,14 +161,4 @@ public class CatThreadController extends HttpServlet {
         }
     }
 
-    private boolean removeThread(CatThread c) {
-        c.deleteThread();
-        boolean status = false;
-        try {
-            status = catThreadDAO.update(c);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return status;
-    }
 }
