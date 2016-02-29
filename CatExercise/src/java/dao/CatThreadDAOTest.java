@@ -1,6 +1,7 @@
 package dao;
 
 import business.CatThread;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -14,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CatThreadDAOTest implements ICatThreadDAO {
 
     static AtomicInteger count = new AtomicInteger(0); // for id autogeneration
-    static Set<CatThread> catThreads = new LinkedHashSet<>();
+    static ArrayList<CatThread> catThreads = new ArrayList<>();
 
     @Override
     public Collection<CatThread> getAll(boolean actif) {
@@ -27,7 +28,7 @@ public class CatThreadDAOTest implements ICatThreadDAO {
             }
             return results;
         } else {
-            return Collections.unmodifiableSet(catThreads);
+            return Collections.unmodifiableCollection(catThreads);
         }
     }
 
@@ -63,16 +64,14 @@ public class CatThreadDAOTest implements ICatThreadDAO {
         if (catThread == null) {
             return false;
         }
+        int index = catThreads.indexOf(catThread);
 
-        int id = catThread.getCatThreadId();
-        CatThread oldCatThread = findByID(id);
-
-        if (oldCatThread == null) {
+        if (index == -1) {
             return false;
         }
-
-        catThreads.remove(oldCatThread);
-        return catThreads.add(catThread);
+        
+        catThreads.set(index, catThread);
+        return true;
     }
 
     @Override
