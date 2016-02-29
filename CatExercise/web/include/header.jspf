@@ -14,7 +14,7 @@
 
         <nav class="navbar navbar-inverse">
             <div class="container">
-                <div id="navbar" class="collapse navbar-collapse">
+                <div id="navbar" >
                     <ul class="nav navbar-nav">
                         <c:url value="/find.jsp" var="url" />
                         <li><a href="${url}">Rechercher</a></li>
@@ -30,9 +30,14 @@
                         <c:if test="${sessionScope.user != null}">
                             <c:url value="/add-thread.jsp" var="url" />
                             <li><a href="${url}">Ajouter un nouveau fil</a></li>
-
+                            <c:if test="${sessionScope.user.seclevel == 100}">
+                                <c:url value="/admincontroller" var="url" />
+                                <li><a href="${url}">Liste utilisateurs</a></li>
+                            </c:if>
                             <li><a>Bonjour : <c:out value="${sessionScope.user.login}" /></a></li>
+                            
                         </c:if>
+                        
                     </ul>
                 </div>
             </div>
