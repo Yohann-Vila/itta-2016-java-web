@@ -47,7 +47,7 @@ public class AdminController extends HttpServlet {
     
         req.getSession().setAttribute("Listusers", getAll());
         
-        
+     //   if ()
         
         RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/adminpage.jsp");
         reqdsp.forward(req, resp);
