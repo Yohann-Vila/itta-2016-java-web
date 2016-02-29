@@ -42,8 +42,9 @@ public class CatThreadDetailsController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-       
-        //idthread
+        User user = (User) req.getSession().getAttribute("user");
+        
+        // idthread
         String idThreadString = req.getParameter("idthread");
         if (idThreadString == null) {
             basicTests(resp);
@@ -58,7 +59,8 @@ public class CatThreadDetailsController extends HttpServlet {
             throw new ServletException("thread id " + idThreadString + " not found in CatThreadDetails controller.");            
         }
 
-        CatThread currentCatThread = getThreadByID(idThread, true);
+        boolean onlyShowActive = user==null?true:!user.isAdmin();
+        CatThread currentCatThread = getThreadByID(idThread, onlyShowActive);
         if (currentCatThread == null) {
             System.out.println("thread id " + idThreadString + " not found in CatThreadDetails controller.");
             throw new ServletException("thread id " + idThreadString + " not found in CatThreadDetails controller.");               
@@ -75,7 +77,6 @@ public class CatThreadDetailsController extends HttpServlet {
         }
         
         Comment comment = commentDAO.findByID(commentid);
-        User user = (User) req.getSession().getAttribute("user");
         if (comment != null && user != null) {
             //check admin
             if (user.isAdmin()) {

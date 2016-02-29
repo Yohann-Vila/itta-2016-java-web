@@ -1,6 +1,7 @@
 package dao;
 
 import business.Comment;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -13,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CommentDAOTest implements ICommentDAO {
 
     static AtomicInteger count = new AtomicInteger(0); // for id autogeneration
-    static Collection<Comment> comments = new LinkedHashSet<>();
+    static ArrayList<Comment> comments = new ArrayList<>();
     
     @Override
     public Collection<Comment> getPostsFromThread(int idThread, boolean actif) {
