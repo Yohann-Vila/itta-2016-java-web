@@ -16,17 +16,23 @@
             <div class="container">
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Rechercher</a></li>
-                        <li>
+                        <c:url value="/find.jsp" var="url" />
+                        <li><a href="${url}">Rechercher</a></li>
+                            <c:url value="/thread" var="url" />
+                        <li><a href="${url}">List des fils</a></li>
+
                         <c:if test="${sessionScope.user == null}">
-                            <c:url value="/login.jsp" var="url"/>
-                           <a href="${url}">Se connecter <c:out value="${sessionScope.user.login}" /></a>
+                            <li>
+                                <c:url value="/login.jsp" var="url"/>
+                                <a href="${url}">Se connecter <c:out value="${sessionScope.user.login}" /></a>
+                            </li>
                         </c:if>   
                         <c:if test="${sessionScope.user != null}">
-                           <a>Bonjour : <c:out value="${sessionScope.user.login}" /></a>
+                            <c:url value="/add-thread.jsp" var="url" />
+                            <li><a href="${url}">Ajouter un nouveau fil</a></li>
+
+                            <li><a>Bonjour : <c:out value="${sessionScope.user.login}" /></a></li>
                         </c:if>
-                        </li>
-                        
                     </ul>
                 </div>
             </div>
