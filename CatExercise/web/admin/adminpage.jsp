@@ -20,18 +20,17 @@
             <td>${user.creationdate} </td>
             <c:url var="url" value="/admincontroller">
                 <c:param name="login" value="${user.login}"/>
+                <c:param name="choix" value="affiche"/>
             </c:url>
             <td> <a href="${url}" type="button" class="btn btn-primary">${(user.banish eq false)?"Actif":"Banish"}</a></td>
         </tr>
     </c:forEach>
-
 </table>
-
 <br>
 
-            <c:url var="url" value="/admincontroller">
-                <c:param name="creation" value="create"/>
-            </c:url>
-            <a href="${url}" type="button" class="btn btn-primary">Ajouter un utilisateur</a>
+<c:url var="url" value="/admincontroller">
+    <c:param name="choix" value="create"/>
+</c:url>
+<a href="${url}" type="button" class="btn btn-primary">Ajouter un utilisateur</a>
 
 <%@include file="/include/footer.jspf" %>

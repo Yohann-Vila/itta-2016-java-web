@@ -2,14 +2,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/include/header.jspf" %>
 
-<c:url value="/admin/admininput" var="url" />
-<h2> Add User</h2> <br>
+<c:url value="/admincontroller?choix=createflush"  var="url" />
+<h2>Ajouter un utilisateur</h2> <br>
 
 <form action="${url}" method="get">
-    <label for="title">Login :</label><input name="login" type="text" />
+    <label for="login">Login :</label><input name="login" type="text" />
+    <label for="Mot de passe">Mot de passe :</label><input name="password" type="password" />    
     <label for="pseudo">Pseudo :</label><input name="pseudo" type="text" />
-    <label for="seclevel">Security level :></label><input name="seclevel" type="number" />
-    <button type="submit">Submit</button>
+    <label for="seclevel">Niveau de sécurité :></label><input name="seclevel" type="number" />
+    <button type="submit">Ajouter</button>
 </form>
-
+    
 <%@include file="/include/footer.jspf" %>
