@@ -18,6 +18,10 @@ public class User {
         this.password = password;
     }
     
+    public boolean isAdmin() {
+        return this.seclevel == User.ADMINISTRATEUR;
+    }
+    
     public String getPassword() {
         return password;
     }
