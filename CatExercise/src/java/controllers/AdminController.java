@@ -109,7 +109,7 @@ public class AdminController extends HttpServlet {
                 // out.println(" Utilisateur existe déjà ");
             }
         } catch (Exception e) {
-
+            retour = false;
             System.out.println(e.getMessage());
         }
         return retour;
