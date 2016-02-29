@@ -30,8 +30,10 @@ public class AdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String choix = req.getParameter("choix");
-        if (choix != null) {
-            switch (choix) {
+        if (choix != null) 
+        {
+            switch (choix) 
+            {
                 case "create":
                     RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/admininput.jsp");
                     reqdsp.forward(req, resp);
