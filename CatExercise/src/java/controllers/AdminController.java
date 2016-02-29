@@ -5,6 +5,7 @@ import dao.IUserDAO;
 import business.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Integer.parseInt;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -28,14 +29,33 @@ public class AdminController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String choix = req.getParameter("choix");
+        if (choix != null) {
+            switch (choix) {
+                case "create":
+                    RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/admininput.jsp");
+                    reqdsp.forward(req, resp);
+                    return;
+                case "createflush":
+                    if (!AdminAddUser(req, resp)) {
+                        reqdsp = req.getRequestDispatcher("/admin/admininput.jsp?error=1");
+                        reqdsp.forward(req, resp);
+                        return;
+                    }
+                    break;
+                case "modifier":
+                    break;
+                default:
 
+                    break;
+            }
+        }
         DisplayUser(req, resp);
 
     }
 
     private void DisplayUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String select_user = req.getParameter("login");
-        String add_user = req.getParameter("creation");
 
         if (select_user != null) {
             if (select_user.isEmpty() == false) {
@@ -44,23 +64,15 @@ public class AdminController extends HttpServlet {
             }
         }
 
-        if (add_user != null) {
-            switch (add_user.toString()) {
-                case "create":
-                    RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/admininput.jsp");
-                    reqdsp.forward(req, resp);
-                    break;
-                case "modification":
-                    break;
-                default:
-                    break;
-            }
-        }
-
         req.getSession().setAttribute("Listusers", getAll());
-
         RequestDispatcher reqdsp = req.getRequestDispatcher("/admin/adminpage.jsp");
         reqdsp.forward(req, resp);
+    }
+
+    private boolean AdminAddUser(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        int seclevel = 0;
+        seclevel = parseInt(req.getParameter("seclevel"));
+        return AdcreateUser(req.getParameter("login"), req.getParameter("password"), req.getParameter("pseudo"), seclevel);
     }
 
     private Collection<User> getAll() {
@@ -75,7 +87,7 @@ public class AdminController extends HttpServlet {
         return cuser;
     }
 
-    boolean AdcreateUser(String login, String password, String pseudo) {
+    boolean AdcreateUser(String login, String password, String pseudo, int niveau) {
 
         User newuser = new User(login, password);
         boolean retour = false;
