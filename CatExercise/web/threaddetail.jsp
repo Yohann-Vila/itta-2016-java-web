@@ -51,12 +51,12 @@
         </c:if>
         <c:url value="/threaddetails?idthread=${currentCatThread.catThreadId}" var="url" />
         <%-- TODO : <%= java.net.URLEncoder.encode((String)pageContext.getAttribute("url")) %> --%>
-        <c:set var="redirecturl" value="/login?redirect=/find.jsp" />
+        <c:set var="redirecturl" value="/login.jsp?redirect=/find.jsp" />
         <br>
         <p><c:if test="${! nouser}"> Composez un nouveau commentaire : </c:if> <c:if test="${nouser}"> Veuillez vous <a href="${redirecturl}" > connecter </a> avec votre compte pour poster un commentaire </c:if></p>
-        <form action="${url}">
-            <textarea class="form-control" name="newcomment" cols="60" rows="5" id="commentfield" <c:if test="${nouser}">disabled</c:if>></textarea>
-            <button type="button" class="btn btn-primary" <c:if test="${nouser}">disabled</c:if>>Envoyer</button>
+        <form action="${url}" method="POST">
+            <textarea class="form-control" name="commentcontent" cols="60" rows="5" id="commentfield" <c:if test="${nouser}">disabled</c:if>></textarea>
+            <button type="submit" class="btn btn-primary" <c:if test="${nouser}">disabled</c:if>>Envoyer</button>
         </form>
     </div>
 </div>

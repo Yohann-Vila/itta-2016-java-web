@@ -5,8 +5,7 @@
  */
 package controllers;
 
-import business.CatThread;
-import business.Comment;
+import business.*;
 import dao.DAOFactory;
 import dao.ICatThreadDAO;
 import dao.ICommentDAO;
@@ -71,6 +70,56 @@ public class CatThreadDetailsController extends HttpServlet {
         
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int threadId = -1;
+        User user;  
+        Object userObj;
+        String username;
+        String commentContent = null;
+        
+        // check if parameters are there
+        
+        // 1 - threadid
+        try {
+            threadId = Integer.parseInt(req.getParameter("idthread"));            
+        } catch(NumberFormatException ex) {
+            invalidPost();
+        }
+        
+        // 2 - user
+        userObj = req.getSession().getAttribute("user");
+        if (userObj == null) {
+            invalidPost();
+            return;
+        }
+
+        try {
+            user = (User) userObj;
+        } catch (ClassCastException ex) {
+            invalidPost();
+            return;
+        }
+
+        username = user.getPseudo();
+        
+        // 3 - comment
+        commentContent = (String) req.getAttribute("commentcontent");
+        if (commentContent == null) {
+            invalidPost();
+            return;
+        }
+        
+        // add the comment
+        addComment(threadId, username, commentContent);
+        // load the thread detail page 
+        doGet(req, resp);
+    }
+    
+    private void invalidPost() throws ServletException{
+        throw new ServletException("Invalid comment post attempt.");        
+    }
+
     /* private methods */
     private void basicTests(HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
@@ -87,8 +136,6 @@ public class CatThreadDetailsController extends HttpServlet {
         basicDetailsPrintThread(id, out);        
         out.println("---------------------------------------------");        
     }
-
-    /* private methods */
     
     private void basicDetailsPrintThread(int id, PrintWriter out) {
         CatThread thread = getThreadByID(id, true);
