@@ -13,7 +13,6 @@
     <label for="login">Login :</label><input name="login" type="text" />
     <label for="password">Password :</label><input name="password" type="password" />
     <input name="redirect" type="hidden" value="${param.redirect}"/>
-
     <button type="submit">Se connecter</button>
 </form>
 
