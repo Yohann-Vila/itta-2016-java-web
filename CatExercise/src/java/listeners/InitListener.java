@@ -33,6 +33,7 @@ public class InitListener implements ServletContextListener {
         
         User admin = new User("admin", "admin");
         admin.setSeclevel(100);
+        admin.setPseudo("Responsable");        
         userDBTest.insert(admin);
         
         return userDBTest;
