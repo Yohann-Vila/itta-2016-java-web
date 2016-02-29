@@ -7,6 +7,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="include/header.jspf" %>
 
+<c:url value="/threaddetails?idthread=${currentCatThread.catThreadId}" var="url" />
+
+<c:if test="${user == null}" var="nouser" />
+<c:if test="${not nouser and user.isAdmin()}" var="isadmin" />
 
 <div class="row">
     <h1>${currentCatThread.titre}</h1>
@@ -34,22 +38,24 @@
     </div> 
 </div>        
 
-<c:forEach items="${currentCatThread.comments}" var="comment" varStatus="s" step="1">
-    <div class="row">        
-        <div class="col-md-4">${comment.login} <br><small>Le ${comment.creationDate}</small></div>
-        <div class="col-md-8">${comment.content}</div>          
-    </div>
-    <div><br></div>
+<c:forEach items="${currentCatThread.comments}" var="comment">
+    <c:if test="${isadmin or not comment.deleted}">
+        <div class="row">        
+            <div class="col-md-4">${comment.login} <br><small>Le ${comment.creationDate}</small></div>
+            <div class="col-md-7">${comment.content}</div>
+            <c:if test="${isadmin}">
+                <c:set value="${url}&commentid=${comment.commentId}" var="urlcomment" />
+                <div class="col-md-1"><a href="${urlcomment}" type="button" class="btn btn-primary">${(comment.deleted eq false)?"Supprimer":"Rétablir"}</a></div>
+            </c:if>
+        </div>
+        <div><br></div>
+    </c:if>
 </c:forEach>
 
 
 <%-- Nouveau commentaires --%>
 <div class="row">
     <div>
-        <c:if test="${user == null}" var="nouser" >
-            
-        </c:if>
-        <c:url value="/threaddetails?idthread=${currentCatThread.catThreadId}" var="url" />
         <%-- TODO : <%= java.net.URLEncoder.encode((String)pageContext.getAttribute("url")) %> --%>
         <c:url value="/login.jsp" var="redirecturl" />
         <br>
